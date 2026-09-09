@@ -1,1 +1,80 @@
-
+{
+  "project_name": "Garage Booking Hub (Haryadi Garage)",
+  "design_archetype": "The Performance Pro & Tactical Minimalist",
+  "palette": {
+    "primary_red": "#DC2626",
+    "primary_red_hover": "#B91C1C",
+    "primary_red_glow": "rgba(220, 38, 38, 0.3)",
+    "dark_bg": "#09090B",
+    "dark_card": "#121215",
+    "dark_card_border": "#27272A",
+    "light_bg": "#FAFAFA",
+    "light_card": "#FFFFFF",
+    "light_border": "#E4E4E7",
+    "text_main_dark": "#FAFAFA",
+    "text_muted_dark": "#A1A1AA",
+    "text_main_light": "#09090B",
+    "text_muted_light": "#71717A",
+    "accent_gray": "#3F3F46"
+  },
+  "typography": {
+    "heading_font": "Geist, system-ui, sans-serif",
+    "body_font": "Geist, system-ui, sans-serif",
+    "hero_h1": "text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight",
+    "section_h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight",
+    "card_h3": "text-xl sm:text-2xl font-semibold",
+    "body_text": "text-base leading-relaxed text-zinc-300 dark:text-zinc-300 light:text-zinc-700",
+    "label_accent": "text-xs font-mono uppercase tracking-[0.2em] text-red-500"
+  },
+  "image_urls": {
+    "hero_detailing": "https://images.unsplash.com/photo-1620584898989-d39f7f9ed1b7?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "garage_workshop": "https://images.unsplash.com/photo-1686023774083-bcf651147815?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "red_car_detail": "https://images.unsplash.com/photo-1614888441158-de25f0ea4bc5?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "dark_garage_car": "https://images.unsplash.com/photo-1735928560793-dc5effe5b53e?crop=entropy&cs=srgb&fm=jpg&q=85"
+  },
+  "core_pages_and_views": [
+    {
+      "view_id": "customer_landing",
+      "name": "Customer Detailing & Home Service Booking Portal",
+      "key_sections": [
+        "Navigation bar with logo, links (Home, Kalkulator, Katalog, Lacak, Admin Panel), and direct CTA 'Booking Sekarang'",
+        "Hero Section: High contrast tactical badge ('Workshop Detailing & Home Service'), headline 'Kembalikan Kilau Sempurna Motor, Mobil & Helm Anda', dual CTA ('Booking Workshop / Home Service' & 'Kalkulator Harga Instan'), key stats (1,250+ Unit, 4.9 Rating, 100% Garansi)",
+        "Interactive Price Calculator (Kalkulator Harga Instan): Category selector (Motorcycle, Car, Helmet Spa), vehicle size/type, service location (Workshop Garasi vs Home Service Panggilan), multi-select service packages (Paint Correction, Engine Deep Degreaser, Ceramic Coating 9H+, Wet Gloss Finish), real-time live total calculator",
+        "Booking Form & Workflow Modal/Section: Date, time slot, vehicle details (brand, model, plate number), location/address for home service, customer contacts (WhatsApp & Name), payment method preference, live submission with instant code generation (e.g. HG-2026-DEMO01)",
+        "Live Status Tracking (Lacak Booking): Search by Booking ID or WhatsApp number with visual step status indicator (Diterima -> Penjadwalan -> Dalam Pengerjaan -> QC Steril -> Selesai / Siap Ambil)",
+        "Pre-Owned Unit Catalog (Katalog Unit Motors & Helm): Filterable grid with specs, condition rating, price tag, and 'Tanya via WA / Booking Unit' button",
+        "Before & After Interactive Slider (Galeri Transformasi): Interactive compare slider showing paint restoration results",
+        "Workshop Facility & Contact Map Section: Operating hours, address (Jl. Raya Otomotif Bintaro), Google Maps link, facility features (CCTV 24/7, Free Wi-Fi, AC Lounge)"
+      ]
+    },
+    {
+      "view_id": "admin_dashboard",
+      "name": "Garage Operations & Booking Management Dashboard",
+      "key_sections": [
+        "Admin Bar & Operational KPI Cards: Total Bookings, Active In-Bay Work, Home Service Dispatched, Monthly Revenue",
+        "Interactive Booking Calendar & Queue List: Filter by Status (Pending, Confirmed, In Progress, Completed, Cancelled) & Service Type (Workshop vs Home Service)",
+        "Vehicle & Customer Inspection Records: Detail drawer showing vehicle condition checklist, assigned mechanic, ceramic coating warranty status, and status progress controller",
+        "New Booking & Quick Status Update Modal: Fast operational status toggle with automated simulated WhatsApp notification trigger"
+      ]
+    }
+  ],
+  "layout_and_spacing": {
+    "container_padding": "px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto",
+    "card_padding": "p-6 sm:p-8",
+    "grid_gap": "gap-6 lg:gap-8",
+    "border_radius": "rounded-xl border border-zinc-800 bg-zinc-950/80 backdrop-blur-md",
+    "red_glow_card": "hover:border-red-600/50 hover:shadow-[0_0_25px_rgba(220,38,38,0.15)] transition-all duration-300"
+  },
+  "interactive_guidelines": {
+    "toast_notifications": "Use Sonner for confirmation messages (e.g., 'Booking berhasil dibuat dengan kode HG-2026-X89')",
+    "micro_interactions": "Buttons must have active scale feedback (`active:scale-[0.98]`), red accent highlight on active tabs, and clear visible hover contrast",
+    "data_testid_convention": "All interactive buttons, input fields, selects, tabs, status tags, and cards MUST have unique kebab-case data-testid attributes (e.g. data-testid='booking-submit-btn', data-testid='calc-vehicle-type-select')"
+  },
+  "instructions_to_main_agent": [
+    "Strictly adhere to the user requested color combination: Gray, Black, White, and Red (#DC2626 accents). Avoid purple, generic blue, or teal tones.",
+    "Implement both the Customer Facing Booking & Tracking Experience and the Operations Admin Dashboard view switcher seamlessly so users can test both customer booking and garage management.",
+    "Ensure the Instant Price Calculator computes total cost live as vehicle type, service location (Workshop vs Home Service), and multiple service options are selected.",
+    "Save created bookings in local state / persistent state so created bookings immediately appear in the Lacak Booking status search and the Admin Operations Dashboard list.",
+    "Make sure all interactive elements (buttons, inputs, tabs, modals, filters) include data-testid attributes for automated testing."
+  ]
+}
