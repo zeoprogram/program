@@ -1,1021 +1,303 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Haryadi Garage | Workshop & Home Detailing</title>
-<meta name="description"content="Haryadi Garage - Workshop dan Home Service Detailing Motor, Mobil & Helm.">
-<style>*{    margin:0;    padding:0;    box-sizing:border-box;}
-:root{    --orange:#ff8a00;    --yellow:#ffd21c;    --blue:#0755d9;    --cyan:#20e0c2;    --dark:#050914;    --dark2:#08132c;    --card:#0d1c3e;    --card2:#122856;    --white:#fff;    --muted:#aebbd5;}
-html{    scroll-behavior:smooth;}
-body{    font-family:Arial,Helvetica,sans-serif;    background:        radial-gradient(circle at 80% 20%,rgba(0,87,255,.25),transparent 30%),        radial-gradient(circle at 20% 70%,rgba(255,130,0,.12),transparent 25%),        var(--dark);    color:white;    overflow-x:hidden;}
-a{    color:inherit;    text-decoration:none;}
-button,input,select,textarea{    font-family:inherit;}
-/* ================= NAVBAR ================= */
-.topbar{    background:linear-gradient(90deg,#ff5b16,#ff9b00);    color:#171717;    padding:8px 5%;    font-size:13px;    font-weight:bold;    display:flex;    justify-content:space-between;}
-.navbar{    position:sticky;    top:0;    z-index:1000;    display:flex;    align-items:center;    justify-content:space-between;    gap:20px;    padding:14px 5%;    background:rgba(3,8,20,.94);    backdrop-filter:blur(15px);    border-bottom:1px solid rgba(255,255,255,.08);}
-.logo{    display:flex;    align-items:center;    gap:12px;    min-width:220px;}
-.logo-icon{    width:45px;    height:45px;    border-radius:13px;    background:var(--orange);    display:grid;    place-items:center;    font-size:24px;}
-.logo h1{    font-size:20px;}
-.logo span{    color:var(--orange);}
-.logo small{    display:block;    color:#8491ab;    font-size:10px;    letter-spacing:2px;    margin-top:3px;}
-.nav-links{    display:flex;    gap:8px;    align-items:center;}
-.nav-links a,.nav-btn{    padding:12px 13px;    border-radius:10px;    color:#b9c4da;    font-size:14px;    font-weight:bold;    transition:.25s;}
-.nav-links a:hover{    background:#10234b;    color:white;}
-.nav-cta{    background:var(--orange)!important;    color:#151515!important;}
-.whatsapp{    color:#20e0a8!important;}
-.mobile-menu{    display:none;    font-size:28px;    cursor:pointer;}
-/* ================= HERO ================= */
-.hero{    max-width:1200px;    margin:auto;    min-height:650px;    padding:100px 5%;    display:grid;    grid-template-columns:1.1fr .9fr;    align-items:center;    gap:60px;}
-.badge{    display:inline-block;    border:1px solid rgba(255,159,0,.5);    background:rgba(255,145,0,.12);    padding:9px 15px;    border-radius:30px;    color:#ffb82e;    font-size:13px;    margin-bottom:25px;}
-.hero h2{    font-size:58px;    line-height:1.05;    margin-bottom:22px;}
-.hero h2 span{    color:var(--yellow);}
-.hero p{    color:#bdc8db;    font-size:17px;    line-height:1.7;    max-width:650px;}
-.hero-buttons{    display:flex;    gap:15px;    margin-top:32px;    flex-wrap:wrap;}
-.btn{    border:none;    cursor:pointer;    padding:16px 25px;    border-radius:13px;    font-weight:bold;    font-size:15px;    transition:.25s;}
-.btn:hover{    transform:translateY(-3px);}
-.btn-primary{    background:linear-gradient(135deg,#ff8b00,#ffc400);    color:#151515;}
-.btn-secondary{    background:#102652;    border:1px solid #31538e;    color:white;}
-.stats{    display:flex;    gap:50px;    margin-top:50px;}
-.stat strong{    display:block;    font-size:28px;}
-.stat span{    color:#8998b5;    font-size:12px;}
-.hero-image{    height:440px;    border-radius:25px;    overflow:hidden;    position:relative;    border:1px solid #304c80;    background:        linear-gradient(135deg,rgba(255,90,0,.3),rgba(0,40,100,.4)),        url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=80")        center/cover;    box-shadow:0 30px 80px rgba(0,0,0,.5);}
-.hero-card{    position:absolute;    bottom:20px;    left:20px;    right:20px;    background:rgba(7,20,50,.92);    padding:22px;    border-radius:16px;    border:1px solid #42649b;}
-.hero-card h3{    color:#ffc72b;    margin-bottom:8px;}
-.hero-card p{    font-size:13px;}
-/* ================= SECTION ================= */
-section{    padding:90px 5%;}
-.container{    max-width:1200px;    margin:auto;}
-.section-title{    text-align:center;    margin-bottom:45px;}
-.section-title .mini{    color:#ffae19;    font-weight:bold;    font-size:13px;    text-transform:uppercase;    letter-spacing:1px;}
-.section-title h2{    font-size:38px;    margin:10px 0;}
-.section-title p{    color:#91a0bb;}
-/* ================= SERVICE ================= */
-.services{    background:linear-gradient(180deg,#061027,#08183a);}
-.service-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:20px;}
-.service-card{    background:linear-gradient(145deg,#102653,#091633);    border:1px solid #203e70;    padding:28px;    border-radius:20px;    transition:.3s;}
-.service-card:hover{    transform:translateY(-7px);    border-color:var(--orange);}
-.service-icon{    font-size:35px;    margin-bottom:18px;}
-.service-card h3{    margin-bottom:10px;}
-.service-card p{    color:#9aa9c4;    line-height:1.6;    font-size:14px;}
-.price{    color:#ffd21c;    font-size:23px;    font-weight:bold;    margin-top:20px;}
-.duration{    color:#7184a8;    font-size:12px;    margin-top:5px;}
-/* ================= CALCULATOR ================= */
-.calculator{    display:grid;    grid-template-columns:1fr 380px;    gap:25px;}
-.calc-box,.summary{    background:#091735;    border:1px solid #203d70;    border-radius:20px;    padding:28px;}
-.calc-box h3,.summary h3{    margin-bottom:25px;}
-.form-group{    margin-bottom:18px;}
-.form-group label{    display:block;    color:#9eacc5;    font-size:13px;    margin-bottom:8px;}
-.form-control{    width:100%;    background:#0d2148;    border:1px solid #29477a;    border-radius:10px;    padding:14px;    color:white;    outline:none;}
-.form-control:focus{    border-color:var(--orange);}
-.check-service{    display:flex;    align-items:center;    gap:12px;    background:#0d2148;    padding:15px;    border-radius:10px;    margin-bottom:10px;    cursor:pointer;    border:1px solid transparent;}
-.check-service:hover{    border-color:#3e639f;}
-.check-service input{    accent-color:var(--orange);}
-.summary{    height:max-content;    position:sticky;    top:100px;}
-.summary-row{    display:flex;    justify-content:space-between;    padding:14px 0;    border-bottom:1px solid #20365f;    color:#a7b5ce;}
-.total{    display:flex;    justify-content:space-between;    margin-top:20px;    font-size:22px;    font-weight:bold;}
-.total strong{    color:#ffd21c;}
-/* ================= BOOKING ================= */
-.booking{    background:        linear-gradient(rgba(3,8,20,.9),rgba(3,8,20,.94)),        url("https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1500&q=80")        center/cover;}
-.booking-box{    max-width:900px;    margin:auto;    background:rgba(8,22,52,.94);    border:1px solid #294b84;    border-radius:25px;    padding:35px;}
-.booking-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:20px;}
-/* ================= TRACKING ================= */
-.tracking{    background:#07132d;}
-.track-form{    max-width:700px;    margin:auto;    display:flex;    gap:10px;}
-.track-form input{    flex:1;}
-.track-result{    max-width:900px;    margin:30px auto 0;    display:none;    background:#0c2047;    border:1px solid #30548c;    padding:30px;    border-radius:20px;}
-.timeline{    display:grid;    grid-template-columns:repeat(5,1fr);    gap:10px;    margin-top:30px;}
-.step{    text-align:center;    padding:15px 5px;    color:#62769c;}
-.step.active{    color:#20e0c2;}
-.step-number{    width:40px;    height:40px;    border-radius:50%;    display:grid;    place-items:center;    margin:auto auto 8px;    background:#132b56;    border:1px solid #34558a;}
-.step.active .step-number{    background:#20e0c2;    color:#07132d;}
-/* ================= CATALOG ================= */
-.catalog-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:22px;}
-.product{    overflow:hidden;    background:#0c1c3d;    border:1px solid #284675;    border-radius:20px;}
-.product-image{    height:230px;    background-size:cover;    background-position:center;}
-.product-body{    padding:22px;}
-.product-body small{    color:#8fa2c5;}
-.product-body h3{    margin:7px 0 15px;}
-.product-price{    color:#ffd21c;    font-weight:bold;    font-size:21px;}
-/* ================= WORKSHOP ================= */
-.workshop-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:30px;}
-.workshop-info{    background:#0b1d41;    border:1px solid #284878;    padding:30px;    border-radius:20px;}
-.info{    display:flex;    gap:15px;    margin:20px 0;}
-.info-icon{    font-size:25px;}
-.info h4{    margin-bottom:5px;}
-.info p{    color:#9aa9c4;    font-size:14px;    line-height:1.6;}
-/* ================= FOOTER ================= */
-footer{    background:#030711;    padding:50px 5%;    border-top:1px solid #152646;}
-.footer-inner{    max-width:1200px;    margin:auto;    display:grid;    grid-template-columns:2fr 1fr 1fr;    gap:30px;}
-footer p{    color:#7585a3;    line-height:1.7;    margin-top:12px;}
-footer h4{    margin-bottom:15px;}
-footer a{    display:block;    color:#8999b8;    margin:10px 0;}
-.copyright{    text-align:center;    color:#53627d;    margin-top:40px;    font-size:13px;}
-/* ================= MODAL ================= */
-.modal{    position:fixed;    inset:0;    background:rgba(0,0,0,.75);    z-index:2000;    display:none;    align-items:center;    justify-content:center;    padding:20px;}
-.modal.show{    display:flex;}
-.modal-content{    width:100%;    max-width:650px;    background:#091936;    border:1px solid #3c5d91;    border-radius:20px;    padding:30px;    max-height:90vh;    overflow:auto;}
-.modal-header{    display:flex;    justify-content:space-between;    align-items:center;    margin-bottom:25px;}
-.close{    background:#17345e;    border:0;    color:white;    width:40px;    height:40px;    border-radius:10px;    cursor:pointer;    font-size:20px;}
-.success{    text-align:center;    padding:30px;}
-.booking-code{    font-size:28px;    color:#ffd21c;    font-weight:bold;    margin:20px 0;    letter-spacing:2px;}
-/* ================= RESPONSIVE ================= */
-@media(max-width:950px){
-    .nav-links{        position:absolute;        top:75px;        left:0;        right:0;        background:#061027;        display:none;        flex-direction:column;        padding:20px;    }
-    .nav-links.show{        display:flex;    }
-    .mobile-menu{        display:block;    }
-    .hero{        grid-template-columns:1fr;        padding-top:60px;    }
-    .hero h2{        font-size:43px;    }
-    .service-grid,    .catalog-grid{        grid-template-columns:1fr 1fr;    }
-    .calculator,    .workshop-grid{        grid-template-columns:1fr;    }
-    .summary{        position:static;    }}
-@media(max-width:650px){
-    .topbar{        font-size:10px;    }
-    .logo{        min-width:auto;    }
-    .logo h1{        font-size:16px;    }
-    .logo small{        display:none;    }
-    section{        padding:65px 5%;    }
-    .hero{        padding:60px 5%;    }
-    .hero h2{        font-size:36px;    }
-    .hero-image{        height:330px;    }
-    .stats{        gap:20px;        flex-wrap:wrap;    }
-    .stat strong{        font-size:23px;    }
-    .service-grid,    .catalog-grid,    .booking-grid{        grid-template-columns:1fr;    }
-    .section-title h2{        font-size:30px;    }
-    .track-form{        flex-direction:column;    }
-    .timeline{        grid-template-columns:1fr;    }
-    .footer-inner{        grid-template-columns:1fr;    }}</style></head>
+<html lang="id"><head>    <meta charset="UTF-8">
+    <meta        name="viewport"        content="width=device-width, initial-scale=1.0"    >
+    <meta        name="description"        content="Haryadi Garage - Workshop & Home Service Detailing"    >
+    <title>Haryadi Garage | Workshop & Home Detailing</title>
+    <link        rel="stylesheet"        href="style.css"    ></head>
 <body>
-<!-- TOP BAR -->
-<div class="topbar">    <span> Haryadi Garage Home Service Detailing: Melayani Panggilan se-Jabodetabek!</span>    <span> Workshop Bintaro</span></div>
-<!-- NAVBAR -->
-<nav class="navbar">
-    <a href="#home" class="logo">        <div class="logo-icon"> </div>        <div>            <h1>HARYADI <span>GARAGE</span></h1>            <small>WORKSHOP & HOME DETAILING</small>        </div>    </a>
-    <div class="mobile-menu" onclick="toggleMenu()">☰</div>
-    <div class="nav-links" id="navLinks">        <a href="#services">Layanan & Harga</a>        <a href="#calculator">Kalkulator</a>        <a href="#catalog">Katalog</a>        <a href="#workshop">Before & After</a>        <a href="#tracking"> Lacak Booking</a>        <a class="whatsapp" href="https://wa.me/6281234567890" target="_blank">            WhatsApp        </a>        <a class="nav-cta" href="#booking"> Booking Sekarang</a>    </div>
-</nav>
-<!-- HERO -->
-<section class="hero" id="home">
-    <div>
-        <div class="badge">            WORKSHOP DETAILING & HOME SERVICE        </div>
-        <h2>            Kembalikan Kilau Sempurna            <span>Motor, Mobil & Helm Anda</span>        </h2>
-        <p>            Haryadi Garage menghadirkan perawatan detailing profesional            berstandar tinggi. Pilih pengerjaan steril di workshop atau            tim kami datang langsung ke rumah/kantor Anda.        </p>
-        <div class="hero-buttons">            <a href="#booking" class="btn btn-primary">                Booking Workshop / Home Service →            </a>
-            <a href="#calculator" class="btn btn-secondary">                Kalkulator Harga            </a>        </div>
-        <div class="stats">            <div class="stat">                <strong>1.250+</strong>                <span>UNIT DIKERJAKAN</span>            </div>
-            <div class="stat">                <strong>4.9/5.0</strong>                <span>RATING KEPUASAN</span>            </div>
-            <div class="stat">                <strong>100%</strong>                <span>GARANSI KILAU</span>            </div>        </div>
-    </div>
-    <div class="hero-image">
-        <div class="hero-card">            <h3>PREMIUM DETAILING</h3>
-            <p>                Kombinasi Paint Correction & High-Grade Coating.                Melindungi cat dari baret halus, sinar UV,                jamur air hujan.            </p>        </div>
-    </div>
-</section>
-<!-- SERVICES -->
-<section class="services" id="services">
-<div class="container">
-<div class="section-title">    <div class="mini">Layanan Profesional</div>    <h2>Pilih Treatment Kendaraan Anda</h2>    <p>Detailing lengkap dengan hasil maksimal.</p></div>
-<div class="service-grid">
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Signature Motor Detailing Wash</h3>        <p>            Cuci detail menyeluruh sampai ke sela mesin,            rantai dan bagian sulit dijangkau.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1,5 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Engine Degreaser & Deep Clean</h3>        <p>            Mengangkat kerak oli membandel, kerak knalpot            dan lumpur kering.        </p>        <div class="price">Rp 100.000</div>        <div class="duration"> ± 2 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>2-Step Paint Correction</h3>        <p>            Mengurangi swirl mark, baret halus dan            mengembalikan kilau cat.        </p>        <div class="price">Rp 180.000</div>        <div class="duration"> ± 4 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Ceramic Coating 9H+</h3>        <p>            Perlindungan premium terhadap UV,            jamur air dan kontaminasi.        </p>        <div class="price">Rp 500.000</div>        <div class="duration"> ± 1 Hari</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Helmet Deep Clean + Ozone</h3>        <p>            Pencucian busa, sterilisasi UV-C,            ozone dan pembersihan ventilasi.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Car Detailing</h3>        <p>            Perawatan eksterior dan interior mobil            dengan produk detailing profesional.        </p>        <div class="price">Mulai Rp 250.000</div>        <div class="duration">Hubungi admin untuk detail</div>    </div>
-</div>
-</div></section>
-<!-- CALCULATOR -->
-<section id="calculator">
-<div class="container">
-<div class="section-title">    <div class="mini">Harga Transparan</div>    <h2>Kalkulator Harga Instan</h2>    <p>Hitung estimasi biaya detailing kendaraan Anda.</p></div>
-<div class="calculator">
-<div class="calc-box">
-    <h3>1. Pilih Kendaraan</h3>
-    <div class="form-group">        <label>Kategori</label>
-        <select id="vehicle" class="form-control" onchange="calculate()">            <option value="0">Pilih kategori</option>            <option value="0">Bebek / Matic Kecil</option>            <option value="25000">Matic Besar / Sport (+Rp25.000)</option>            <option value="50000">Big Bike / Moge (+Rp50.000)</option>        </select>    </div>
-    <h3>2. Pilih Lokasi</h3>
-    <div class="form-group">
-        <select id="location" class="form-control" onchange="calculate()">
-            <option value="0">                Workshop Garasi - Gratis Transport            </option>
-            <option value="0">                Home Service - Zona 1 (Dekat Workshop)            </option>
-            <option value="25000">                Home Service - Zona 2            </option>
-            <option value="45000">                Home Service - Zona 3            </option>
-            <option value="75000">                Home Service - Zona 4 / Luar Kota            </option>
-        </select>
-    </div>
-    <h3>3. Pilih Treatment</h3>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="50000"            data-name="Signature Motor Detailing Wash"            checked            onchange="calculate()"        >        <span>            <b>Signature Motor Detailing Wash</b><br>            <small>Rp 50.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="100000"            data-name="Engine Degreaser & Deep Clean"            onchange="calculate()"        >        <span>            <b>Engine Degreaser & Deep Clean</b><br>            <small>Rp 100.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="180000"            data-name="2-Step Paint Correction"            onchange="calculate()"        >        <span>            <b>2-Step Paint Correctio<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Haryadi Garage | Workshop & Home Detailing</title>
-<meta name="description"content="Haryadi Garage - Workshop dan Home Service Detailing Motor, Mobil & Helm.">
-<style>*{    margin:0;    padding:0;    box-sizing:border-box;}
-:root{    --orange:#ff8a00;    --yellow:#ffd21c;    --blue:#0755d9;    --cyan:#20e0c2;    --dark:#050914;    --dark2:#08132c;    --card:#0d1c3e;    --card2:#122856;    --white:#fff;    --muted:#aebbd5;}
-html{    scroll-behavior:smooth;}
-body{    font-family:Arial,Helvetica,sans-serif;    background:        radial-gradient(circle at 80% 20%,rgba(0,87,255,.25),transparent 30%),        radial-gradient(circle at 20% 70%,rgba(255,130,0,.12),transparent 25%),        var(--dark);    color:white;    overflow-x:hidden;}
-a{    color:inherit;    text-decoration:none;}
-button,input,select,textarea{    font-family:inherit;}
-/* ================= NAVBAR ================= */
-.topbar{    background:linear-gradient(90deg,#ff5b16,#ff9b00);    color:#171717;    padding:8px 5%;    font-size:13px;    font-weight:bold;    display:flex;    justify-content:space-between;}
-.navbar{    position:sticky;    top:0;    z-index:1000;    display:flex;    align-items:center;    justify-content:space-between;    gap:20px;    padding:14px 5%;    background:rgba(3,8,20,.94);    backdrop-filter:blur(15px);    border-bottom:1px solid rgba(255,255,255,.08);}
-.logo{    display:flex;    align-items:center;    gap:12px;    min-width:220px;}
-.logo-icon{    width:45px;    height:45px;    border-radius:13px;    background:var(--orange);    display:grid;    place-items:center;    font-size:24px;}
-.logo h1{    font-size:20px;}
-.logo span{    color:var(--orange);}
-.logo small{    display:block;    color:#8491ab;    font-size:10px;    letter-spacing:2px;    margin-top:3px;}
-.nav-links{    display:flex;    gap:8px;    align-items:center;}
-.nav-links a,.nav-btn{    padding:12px 13px;    border-radius:10px;    color:#b9c4da;    font-size:14px;    font-weight:bold;    transition:.25s;}
-.nav-links a:hover{    background:#10234b;    color:white;}
-.nav-cta{    background:var(--orange)!important;    color:#151515!important;}
-.whatsapp{    color:#20e0a8!important;}
-.mobile-menu{    display:none;    font-size:28px;    cursor:pointer;}
-/* ================= HERO ================= */
-.hero{    max-width:1200px;    margin:auto;    min-height:650px;    padding:100px 5%;    display:grid;    grid-template-columns:1.1fr .9fr;    align-items:center;    gap:60px;}
-.badge{    display:inline-block;    border:1px solid rgba(255,159,0,.5);    background:rgba(255,145,0,.12);    padding:9px 15px;    border-radius:30px;    color:#ffb82e;    font-size:13px;    margin-bottom:25px;}
-.hero h2{    font-size:58px;    line-height:1.05;    margin-bottom:22px;}
-.hero h2 span{    color:var(--yellow);}
-.hero p{    color:#bdc8db;    font-size:17px;    line-height:1.7;    max-width:650px;}
-.hero-buttons{    display:flex;    gap:15px;    margin-top:32px;    flex-wrap:wrap;}
-.btn{    border:none;    cursor:pointer;    padding:16px 25px;    border-radius:13px;    font-weight:bold;    font-size:15px;    transition:.25s;}
-.btn:hover{    transform:translateY(-3px);}
-.btn-primary{    background:linear-gradient(135deg,#ff8b00,#ffc400);    color:#151515;}
-.btn-secondary{    background:#102652;    border:1px solid #31538e;    color:white;}
-.stats{    display:flex;    gap:50px;    margin-top:50px;}
-.stat strong{    display:block;    font-size:28px;}
-.stat span{    color:#8998b5;    font-size:12px;}
-.hero-image{    height:440px;    border-radius:25px;    overflow:hidden;    position:relative;    border:1px solid #304c80;    background:        linear-gradient(135deg,rgba(255,90,0,.3),rgba(0,40,100,.4)),        url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=80")        center/cover;    box-shadow:0 30px 80px rgba(0,0,0,.5);}
-.hero-card{    position:absolute;    bottom:20px;    left:20px;    right:20px;    background:rgba(7,20,50,.92);    padding:22px;    border-radius:16px;    border:1px solid #42649b;}
-.hero-card h3{    color:#ffc72b;    margin-bottom:8px;}
-.hero-card p{    font-size:13px;}
-/* ================= SECTION ================= */
-section{    padding:90px 5%;}
-.container{    max-width:1200px;    margin:auto;}
-.section-title{    text-align:center;    margin-bottom:45px;}
-.section-title .mini{    color:#ffae19;    font-weight:bold;    font-size:13px;    text-transform:uppercase;    letter-spacing:1px;}
-.section-title h2{    font-size:38px;    margin:10px 0;}
-.section-title p{    color:#91a0bb;}
-/* ================= SERVICE ================= */
-.services{    background:linear-gradient(180deg,#061027,#08183a);}
-.service-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:20px;}
-.service-card{    background:linear-gradient(145deg,#102653,#091633);    border:1px solid #203e70;    padding:28px;    border-radius:20px;    transition:.3s;}
-.service-card:hover{    transform:translateY(-7px);    border-color:var(--orange);}
-.service-icon{    font-size:35px;    margin-bottom:18px;}
-.service-card h3{    margin-bottom:10px;}
-.service-card p{    color:#9aa9c4;    line-height:1.6;    font-size:14px;}
-.price{    color:#ffd21c;    font-size:23px;    font-weight:bold;    margin-top:20px;}
-.duration{    color:#7184a8;    font-size:12px;    margin-top:5px;}
-/* ================= CALCULATOR ================= */
-.calculator{    display:grid;    grid-template-columns:1fr 380px;    gap:25px;}
-.calc-box,.summary{    background:#091735;    border:1px solid #203d70;    border-radius:20px;    padding:28px;}
-.calc-box h3,.summary h3{    margin-bottom:25px;}
-.form-group{    margin-bottom:18px;}
-.form-group label{    display:block;    color:#9eacc5;    font-size:13px;    margin-bottom:8px;}
-.form-control{    width:100%;    background:#0d2148;    border:1px solid #29477a;    border-radius:10px;    padding:14px;    color:white;    outline:none;}
-.form-control:focus{    border-color:var(--orange);}
-.check-service{    display:flex;    align-items:center;    gap:12px;    background:#0d2148;    padding:15px;    border-radius:10px;    margin-bottom:10px;    cursor:pointer;    border:1px solid transparent;}
-.check-service:hover{    border-color:#3e639f;}
-.check-service input{    accent-color:var(--orange);}
-.summary{    height:max-content;    position:sticky;    top:100px;}
-.summary-row{    display:flex;    justify-content:space-between;    padding:14px 0;    border-bottom:1px solid #20365f;    color:#a7b5ce;}
-.total{    display:flex;    justify-content:space-between;    margin-top:20px;    font-size:22px;    font-weight:bold;}
-.total strong{    color:#ffd21c;}
-/* ================= BOOKING ================= */
-.booking{    background:        linear-gradient(rgba(3,8,20,.9),rgba(3,8,20,.94)),        url("https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1500&q=80")        center/cover;}
-.booking-box{    max-width:900px;    margin:auto;    background:rgba(8,22,52,.94);    border:1px solid #294b84;    border-radius:25px;    padding:35px;}
-.booking-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:20px;}
-/* ================= TRACKING ================= */
-.tracking{    background:#07132d;}
-.track-form{    max-width:700px;    margin:auto;    display:flex;    gap:10px;}
-.track-form input{    flex:1;}
-.track-result{    max-width:900px;    margin:30px auto 0;    display:none;    background:#0c2047;    border:1px solid #30548c;    padding:30px;    border-radius:20px;}
-.timeline{    display:grid;    grid-template-columns:repeat(5,1fr);    gap:10px;    margin-top:30px;}
-.step{    text-align:center;    padding:15px 5px;    color:#62769c;}
-.step.active{    color:#20e0c2;}
-.step-number{    width:40px;    height:40px;    border-radius:50%;    display:grid;    place-items:center;    margin:auto auto 8px;    background:#132b56;    border:1px solid #34558a;}
-.step.active .step-number{    background:#20e0c2;    color:#07132d;}
-/* ================= CATALOG ================= */
-.catalog-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:22px;}
-.product{    overflow:hidden;    background:#0c1c3d;    border:1px solid #284675;    border-radius:20px;}
-.product-image{    height:230px;    background-size:cover;    background-position:center;}
-.product-body{    padding:22px;}
-.product-body small{    color:#8fa2c5;}
-.product-body h3{    margin:7px 0 15px;}
-.product-price{    color:#ffd21c;    font-weight:bold;    font-size:21px;}
-/* ================= WORKSHOP ================= */
-.workshop-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:30px;}
-.workshop-info{    background:#0b1d41;    border:1px solid #284878;    padding:30px;    border-radius:20px;}
-.info{    display:flex;    gap:15px;    margin:20px 0;}
-.info-icon{    font-size:25px;}
-.info h4{    margin-bottom:5px;}
-.info p{    color:#9aa9c4;    font-size:14px;    line-height:1.6;}
-/* ================= FOOTER ================= */
-footer{    background:#030711;    padding:50px 5%;    border-top:1px solid #152646;}
-.footer-inner{    max-width:1200px;    margin:auto;    display:grid;    grid-template-columns:2fr 1fr 1fr;    gap:30px;}
-footer p{    color:#7585a3;    line-height:1.7;    margin-top:12px;}
-footer h4{    margin-bottom:15px;}
-footer a{    display:block;    color:#8999b8;    margin:10px 0;}
-.copyright{    text-align:center;    color:#53627d;    margin-top:40px;    font-size:13px;}
-/* ================= MODAL ================= */
-.modal{    position:fixed;    inset:0;    background:rgba(0,0,0,.75);    z-index:2000;    display:none;    align-items:center;    justify-content:center;    padding:20px;}
-.modal.show{    display:flex;}
-.modal-content{    width:100%;    max-width:650px;    background:#091936;    border:1px solid #3c5d91;    border-radius:20px;    padding:30px;    max-height:90vh;    overflow:auto;}
-.modal-header{    display:flex;    justify-content:space-between;    align-items:center;    margin-bottom:25px;}
-.close{    background:#17345e;    border:0;    color:white;    width:40px;    height:40px;    border-radius:10px;    cursor:pointer;    font-size:20px;}
-.success{    text-align:center;    padding:30px;}
-.booking-code{    font-size:28px;    color:#ffd21c;    font-weight:bold;    margin:20px 0;    letter-spacing:2px;}
-/* ================= RESPONSIVE ================= */
-@media(max-width:950px){
-    .nav-links{        position:absolute;        top:75px;        left:0;        right:0;        background:#061027;        display:none;        flex-direction:column;        padding:20px;    }
-    .nav-links.show{        display:flex;    }
-    .mobile-menu{        display:block;    }
-    .hero{        grid-template-columns:1fr;        padding-top:60px;    }
-    .hero h2{        font-size:43px;    }
-    .service-grid,    .catalog-grid{        grid-template-columns:1fr 1fr;    }
-    .calculator,    .workshop-grid{        grid-template-columns:1fr;    }
-    .summary{        position:static;    }}
-@media(max-width:650px){
-    .topbar{        font-size:10px;    }
-    .logo{        min-width:auto;    }
-    .logo h1{        font-size:16px;    }
-    .logo small{        display:none;    }
-    section{        padding:65px 5%;    }
-    .hero{        padding:60px 5%;    }
-    .hero h2{        font-size:36px;    }
-    .hero-image{        height:330px;    }
-    .stats{        gap:20px;        flex-wrap:wrap;    }
-    .stat strong{        font-size:23px;    }
-    .service-grid,    .catalog-grid,    .booking-grid{        grid-template-columns:1fr;    }
-    .section-title h2{        font-size:30px;    }
-    .track-form{        flex-direction:column;    }
-    .timeline{        grid-template-columns:1fr;    }
-    .footer-inner{        grid-template-columns:1fr;    }}</style></head>
-<body>
-<!-- TOP BAR -->
-<div class="topbar">    <span> Haryadi Garage Home Service Detailing: Melayani Panggilan se-Jabodetabek!</span>    <span> Workshop Bintaro</span></div>
-<!-- NAVBAR -->
-<nav class="navbar">
-    <a href="#home" class="logo">        <div class="logo-icon"> </div>        <div>            <h1>HARYADI <span>GARAGE</span></h1>            <small>WORKSHOP & HOME DETAILING</small>        </div>    </a>
-    <div class="mobile-menu" onclick="toggleMenu()">☰</div>
-    <div class="nav-links" id="navLinks">        <a href="#services">Layanan & Harga</a>        <a href="#calculator">Kalkulator</a>        <a href="#catalog">Katalog</a>        <a href="#workshop">Before & After</a>        <a href="#tracking"> Lacak Booking</a>        <a class="whatsapp" href="https://wa.me/6281234567890" target="_blank">            WhatsApp        </a>        <a class="nav-cta" href="#booking"> Booking Sekarang</a>    </div>
-</nav>
-<!-- HERO -->
-<section class="hero" id="home">
-    <div>
-        <div class="badge">            WORKSHOP DETAILING & HOME SERVICE        </div>
-        <h2>            Kembalikan Kilau Sempurna            <span>Motor, Mobil & Helm Anda</span>        </h2>
-        <p>            Haryadi Garage menghadirkan perawatan detailing profesional            berstandar tinggi. Pilih pengerjaan steril di workshop atau            tim kami datang langsung ke rumah/kantor Anda.        </p>
-        <div class="hero-buttons">            <a href="#booking" class="btn btn-primary">                Booking Workshop / Home Service →            </a>
-            <a href="#calculator" class="btn btn-secondary">                Kalkulator Harga            </a>        </div>
-        <div class="stats">            <div class="stat">                <strong>1.250+</strong>                <span>UNIT DIKERJAKAN</span>            </div>
-            <div class="stat">                <strong>4.9/5.0</strong>                <span>RATING KEPUASAN</span>            </div>
-            <div class="stat">                <strong>100%</strong>                <span>GARANSI KILAU</span>            </div>        </div>
-    </div>
-    <div class="hero-image">
-        <div class="hero-card">            <h3>PREMIUM DETAILING</h3>
-            <p>                Kombinasi Paint Correction & High-Grade Coating.                Melindungi cat dari baret halus, sinar UV,                jamur air hujan.            </p>        </div>
-    </div>
-</section>
-<!-- SERVICES -->
-<section class="services" id="services">
-<div class="container">
-<div class="section-title">    <div class="mini">Layanan Profesional</div>    <h2>Pilih Treatment Kendaraan Anda</h2>    <p>Detailing lengkap dengan hasil maksimal.</p></div>
-<div class="service-grid">
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Signature Motor Detailing Wash</h3>        <p>            Cuci detail menyeluruh sampai ke sela mesin,            rantai dan bagian sulit dijangkau.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1,5 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Engine Degreaser & Deep Clean</h3>        <p>            Mengangkat kerak oli membandel, kerak knalpot            dan lumpur kering.        </p>        <div class="price">Rp 100.000</div>        <div class="duration"> ± 2 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>2-Step Paint Correction</h3>        <p>            Mengurangi swirl mark, baret halus dan            mengembalikan kilau cat.        </p>        <div class="price">Rp 180.000</div>        <div class="duration"> ± 4 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Ceramic Coating 9H+</h3>        <p>            Perlindungan premium terhadap UV,            jamur air dan kontaminasi.        </p>        <div class="price">Rp 500.000</div>        <div class="duration"> ± 1 Hari</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Helmet Deep Clean + Ozone</h3>        <p>            Pencucian busa, sterilisasi UV-C,            ozone dan pembersihan ventilasi.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Car Detailing</h3>        <p>            Perawatan eksterior dan interior mobil            dengan produk detailing profesional.        </p>        <div class="price">Mulai Rp 250.000</div>        <div class="duration">Hubungi admin untuk detail</div>    </div>
-</div>
-</div></section>
-<!-- CALCULATOR -->
-<section id="calculator">
-<div class="container">
-<div class="section-title">    <div class="mini">Harga Transparan</div>    <h2>Kalkulator Harga Instan</h2>    <p>Hitung estimasi biaya detailing kendaraan Anda.</p></div>
-<div class="calculator">
-<div class="calc-box">
-    <h3>1. Pilih Kendaraan</h3>
-    <div class="form-group">        <label>Kategori</label>
-        <select id="vehicle" class="form-control" onchange="calculate()">            <option value="0">Pilih kategori</option>            <option value="0">Bebek / Matic Kecil</option>            <option value="25000">Matic Besar / Sport (+Rp25.000)</option>            <option value="50000">Big Bike / Moge (+Rp50.000)</option>        </select>    </div>
-    <h3>2. Pilih Lokasi</h3>
-    <div class="form-group">
-        <select id="location" class="form-control" onchange="calculate()">
-            <option value="0">                Workshop Garasi - Gratis Transport            </option>
-            <option value="0">                Home Service - Zona 1 (Dekat Workshop)            </option>
-            <option value="25000">                Home Service - Zona 2            </option>
-            <option value="45000">                Home Service - Zona 3            </option>
-            <option value="75000">                Home Service - Zona 4 / Luar Kota            </option>
-        </select>
-    </div>
-    <h3>3. Pilih Treatment</h3>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="50000"            data-name="Signature Motor Detailing Wash"            checked            onchange="calculate()"        >        <span>            <b>Signature Motor Detailing Wash</b><br>            <small>Rp 50.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="100000"            data-name="Engine Degreaser & Deep Clean"            onchange="calculate()"        >        <span>            <b>Engine Degreaser & Deep Clean</b><br>            <small>Rp 100.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="180000"            data-name="2-Step Paint Correction"            onchange="calculate()"        >        <span>            <b>2-Step Paint Correctio<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Haryadi Garage | Workshop & Home Detailing</title>
-<meta name="description"content="Haryadi Garage - Workshop dan Home Service Detailing Motor, Mobil & Helm.">
-<style>*{    margin:0;    padding:0;    box-sizing:border-box;}
-:root{    --orange:#ff8a00;    --yellow:#ffd21c;    --blue:#0755d9;    --cyan:#20e0c2;    --dark:#050914;    --dark2:#08132c;    --card:#0d1c3e;    --card2:#122856;    --white:#fff;    --muted:#aebbd5;}
-html{    scroll-behavior:smooth;}
-body{    font-family:Arial,Helvetica,sans-serif;    background:        radial-gradient(circle at 80% 20%,rgba(0,87,255,.25),transparent 30%),        radial-gradient(circle at 20% 70%,rgba(255,130,0,.12),transparent 25%),        var(--dark);    color:white;    overflow-x:hidden;}
-a{    color:inherit;    text-decoration:none;}
-button,input,select,textarea{    font-family:inherit;}
-/* ================= NAVBAR ================= */
-.topbar{    background:linear-gradient(90deg,#ff5b16,#ff9b00);    color:#171717;    padding:8px 5%;    font-size:13px;    font-weight:bold;    display:flex;    justify-content:space-between;}
-.navbar{    position:sticky;    top:0;    z-index:1000;    display:flex;    align-items:center;    justify-content:space-between;    gap:20px;    padding:14px 5%;    background:rgba(3,8,20,.94);    backdrop-filter:blur(15px);    border-bottom:1px solid rgba(255,255,255,.08);}
-.logo{    display:flex;    align-items:center;    gap:12px;    min-width:220px;}
-.logo-icon{    width:45px;    height:45px;    border-radius:13px;    background:var(--orange);    display:grid;    place-items:center;    font-size:24px;}
-.logo h1{    font-size:20px;}
-.logo span{    color:var(--orange);}
-.logo small{    display:block;    color:#8491ab;    font-size:10px;    letter-spacing:2px;    margin-top:3px;}
-.nav-links{    display:flex;    gap:8px;    align-items:center;}
-.nav-links a,.nav-btn{    padding:12px 13px;    border-radius:10px;    color:#b9c4da;    font-size:14px;    font-weight:bold;    transition:.25s;}
-.nav-links a:hover{    background:#10234b;    color:white;}
-.nav-cta{    background:var(--orange)!important;    color:#151515!important;}
-.whatsapp{    color:#20e0a8!important;}
-.mobile-menu{    display:none;    font-size:28px;    cursor:pointer;}
-/* ================= HERO ================= */
-.hero{    max-width:1200px;    margin:auto;    min-height:650px;    padding:100px 5%;    display:grid;    grid-template-columns:1.1fr .9fr;    align-items:center;    gap:60px;}
-.badge{    display:inline-block;    border:1px solid rgba(255,159,0,.5);    background:rgba(255,145,0,.12);    padding:9px 15px;    border-radius:30px;    color:#ffb82e;    font-size:13px;    margin-bottom:25px;}
-.hero h2{    font-size:58px;    line-height:1.05;    margin-bottom:22px;}
-.hero h2 span{    color:var(--yellow);}
-.hero p{    color:#bdc8db;    font-size:17px;    line-height:1.7;    max-width:650px;}
-.hero-buttons{    display:flex;    gap:15px;    margin-top:32px;    flex-wrap:wrap;}
-.btn{    border:none;    cursor:pointer;    padding:16px 25px;    border-radius:13px;    font-weight:bold;    font-size:15px;    transition:.25s;}
-.btn:hover{    transform:translateY(-3px);}
-.btn-primary{    background:linear-gradient(135deg,#ff8b00,#ffc400);    color:#151515;}
-.btn-secondary{    background:#102652;    border:1px solid #31538e;    color:white;}
-.stats{    display:flex;    gap:50px;    margin-top:50px;}
-.stat strong{    display:block;    font-size:28px;}
-.stat span{    color:#8998b5;    font-size:12px;}
-.hero-image{    height:440px;    border-radius:25px;    overflow:hidden;    position:relative;    border:1px solid #304c80;    background:        linear-gradient(135deg,rgba(255,90,0,.3),rgba(0,40,100,.4)),        url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=80")        center/cover;    box-shadow:0 30px 80px rgba(0,0,0,.5);}
-.hero-card{    position:absolute;    bottom:20px;    left:20px;    right:20px;    background:rgba(7,20,50,.92);    padding:22px;    border-radius:16px;    border:1px solid #42649b;}
-.hero-card h3{    color:#ffc72b;    margin-bottom:8px;}
-.hero-card p{    font-size:13px;}
-/* ================= SECTION ================= */
-section{    padding:90px 5%;}
-.container{    max-width:1200px;    margin:auto;}
-.section-title{    text-align:center;    margin-bottom:45px;}
-.section-title .mini{    color:#ffae19;    font-weight:bold;    font-size:13px;    text-transform:uppercase;    letter-spacing:1px;}
-.section-title h2{    font-size:38px;    margin:10px 0;}
-.section-title p{    color:#91a0bb;}
-/* ================= SERVICE ================= */
-.services{    background:linear-gradient(180deg,#061027,#08183a);}
-.service-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:20px;}
-.service-card{    background:linear-gradient(145deg,#102653,#091633);    border:1px solid #203e70;    padding:28px;    border-radius:20px;    transition:.3s;}
-.service-card:hover{    transform:translateY(-7px);    border-color:var(--orange);}
-.service-icon{    font-size:35px;    margin-bottom:18px;}
-.service-card h3{    margin-bottom:10px;}
-.service-card p{    color:#9aa9c4;    line-height:1.6;    font-size:14px;}
-.price{    color:#ffd21c;    font-size:23px;    font-weight:bold;    margin-top:20px;}
-.duration{    color:#7184a8;    font-size:12px;    margin-top:5px;}
-/* ================= CALCULATOR ================= */
-.calculator{    display:grid;    grid-template-columns:1fr 380px;    gap:25px;}
-.calc-box,.summary{    background:#091735;    border:1px solid #203d70;    border-radius:20px;    padding:28px;}
-.calc-box h3,.summary h3{    margin-bottom:25px;}
-.form-group{    margin-bottom:18px;}
-.form-group label{    display:block;    color:#9eacc5;    font-size:13px;    margin-bottom:8px;}
-.form-control{    width:100%;    background:#0d2148;    border:1px solid #29477a;    border-radius:10px;    padding:14px;    color:white;    outline:none;}
-.form-control:focus{    border-color:var(--orange);}
-.check-service{    display:flex;    align-items:center;    gap:12px;    background:#0d2148;    padding:15px;    border-radius:10px;    margin-bottom:10px;    cursor:pointer;    border:1px solid transparent;}
-.check-service:hover{    border-color:#3e639f;}
-.check-service input{    accent-color:var(--orange);}
-.summary{    height:max-content;    position:sticky;    top:100px;}
-.summary-row{    display:flex;    justify-content:space-between;    padding:14px 0;    border-bottom:1px solid #20365f;    color:#a7b5ce;}
-.total{    display:flex;    justify-content:space-between;    margin-top:20px;    font-size:22px;    font-weight:bold;}
-.total strong{    color:#ffd21c;}
-/* ================= BOOKING ================= */
-.booking{    background:        linear-gradient(rgba(3,8,20,.9),rgba(3,8,20,.94)),        url("https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1500&q=80")        center/cover;}
-.booking-box{    max-width:900px;    margin:auto;    background:rgba(8,22,52,.94);    border:1px solid #294b84;    border-radius:25px;    padding:35px;}
-.booking-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:20px;}
-/* ================= TRACKING ================= */
-.tracking{    background:#07132d;}
-.track-form{    max-width:700px;    margin:auto;    display:flex;    gap:10px;}
-.track-form input{    flex:1;}
-.track-result{    max-width:900px;    margin:30px auto 0;    display:none;    background:#0c2047;    border:1px solid #30548c;    padding:30px;    border-radius:20px;}
-.timeline{    display:grid;    grid-template-columns:repeat(5,1fr);    gap:10px;    margin-top:30px;}
-.step{    text-align:center;    padding:15px 5px;    color:#62769c;}
-.step.active{    color:#20e0c2;}
-.step-number{    width:40px;    height:40px;    border-radius:50%;    display:grid;    place-items:center;    margin:auto auto 8px;    background:#132b56;    border:1px solid #34558a;}
-.step.active .step-number{    background:#20e0c2;    color:#07132d;}
-/* ================= CATALOG ================= */
-.catalog-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:22px;}
-.product{    overflow:hidden;    background:#0c1c3d;    border:1px solid #284675;    border-radius:20px;}
-.product-image{    height:230px;    background-size:cover;    background-position:center;}
-.product-body{    padding:22px;}
-.product-body small{    color:#8fa2c5;}
-.product-body h3{    margin:7px 0 15px;}
-.product-price{    color:#ffd21c;    font-weight:bold;    font-size:21px;}
-/* ================= WORKSHOP ================= */
-.workshop-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:30px;}
-.workshop-info{    background:#0b1d41;    border:1px solid #284878;    padding:30px;    border-radius:20px;}
-.info{    display:flex;    gap:15px;    margin:20px 0;}
-.info-icon{    font-size:25px;}
-.info h4{    margin-bottom:5px;}
-.info p{    color:#9aa9c4;    font-size:14px;    line-height:1.6;}
-/* ================= FOOTER ================= */
-footer{    background:#030711;    padding:50px 5%;    border-top:1px solid #152646;}
-.footer-inner{    max-width:1200px;    margin:auto;    display:grid;    grid-template-columns:2fr 1fr 1fr;    gap:30px;}
-footer p{    color:#7585a3;    line-height:1.7;    margin-top:12px;}
-footer h4{    margin-bottom:15px;}
-footer a{    display:block;    color:#8999b8;    margin:10px 0;}
-.copyright{    text-align:center;    color:#53627d;    margin-top:40px;    font-size:13px;}
-/* ================= MODAL ================= */
-.modal{    position:fixed;    inset:0;    background:rgba(0,0,0,.75);    z-index:2000;    display:none;    align-items:center;    justify-content:center;    padding:20px;}
-.modal.show{    display:flex;}
-.modal-content{    width:100%;    max-width:650px;    background:#091936;    border:1px solid #3c5d91;    border-radius:20px;    padding:30px;    max-height:90vh;    overflow:auto;}
-.modal-header{    display:flex;    justify-content:space-between;    align-items:center;    margin-bottom:25px;}
-.close{    background:#17345e;    border:0;    color:white;    width:40px;    height:40px;    border-radius:10px;    cursor:pointer;    font-size:20px;}
-.success{    text-align:center;    padding:30px;}
-.booking-code{    font-size:28px;    color:#ffd21c;    font-weight:bold;    margin:20px 0;    letter-spacing:2px;}
-/* ================= RESPONSIVE ================= */
-@media(max-width:950px){
-    .nav-links{        position:absolute;        top:75px;        left:0;        right:0;        background:#061027;        display:none;        flex-direction:column;        padding:20px;    }
-    .nav-links.show{        display:flex;    }
-    .mobile-menu{        display:block;    }
-    .hero{        grid-template-columns:1fr;        padding-top:60px;    }
-    .hero h2{        font-size:43px;    }
-    .service-grid,    .catalog-grid{        grid-template-columns:1fr 1fr;    }
-    .calculator,    .workshop-grid{        grid-template-columns:1fr;    }
-    .summary{        position:static;    }}
-@media(max-width:650px){
-    .topbar{        font-size:10px;    }
-    .logo{        min-width:auto;    }
-    .logo h1{        font-size:16px;    }
-    .logo small{        display:none;    }
-    section{        padding:65px 5%;    }
-    .hero{        padding:60px 5%;    }
-    .hero h2{        font-size:36px;    }
-    .hero-image{        height:330px;    }
-    .stats{        gap:20px;        flex-wrap:wrap;    }
-    .stat strong{        font-size:23px;    }
-    .service-grid,    .catalog-grid,    .booking-grid{        grid-template-columns:1fr;    }
-    .section-title h2{        font-size:30px;    }
-    .track-form{        flex-direction:column;    }
-    .timeline{        grid-template-columns:1fr;    }
-    .footer-inner{        grid-template-columns:1fr;    }}</style></head>
-<body>
-<!-- TOP BAR -->
-<div class="topbar">    <span> Haryadi Garage Home Service Detailing: Melayani Panggilan se-Jabodetabek!</span>    <span> Workshop Bintaro</span></div>
-<!-- NAVBAR -->
-<nav class="navbar">
-    <a href="#home" class="logo">        <div class="logo-icon"> </div>        <div>            <h1>HARYADI <span>GARAGE</span></h1>            <small>WORKSHOP & HOME DETAILING</small>        </div>    </a>
-    <div class="mobile-menu" onclick="toggleMenu()">☰</div>
-    <div class="nav-links" id="navLinks">        <a href="#services">Layanan & Harga</a>        <a href="#calculator">Kalkulator</a>        <a href="#catalog">Katalog</a>        <a href="#workshop">Before & After</a>        <a href="#tracking"> Lacak Booking</a>        <a class="whatsapp" href="https://wa.me/6281234567890" target="_blank">            WhatsApp        </a>        <a class="nav-cta" href="#booking"> Booking Sekarang</a>    </div>
-</nav>
-<!-- HERO -->
-<section class="hero" id="home">
-    <div>
-        <div class="badge">            WORKSHOP DETAILING & HOME SERVICE        </div>
-        <h2>            Kembalikan Kilau Sempurna            <span>Motor, Mobil & Helm Anda</span>        </h2>
-        <p>            Haryadi Garage menghadirkan perawatan detailing profesional            berstandar tinggi. Pilih pengerjaan steril di workshop atau            tim kami datang langsung ke rumah/kantor Anda.        </p>
-        <div class="hero-buttons">            <a href="#booking" class="btn btn-primary">                Booking Workshop / Home Service →            </a>
-            <a href="#calculator" class="btn btn-secondary">                Kalkulator Harga            </a>        </div>
-        <div class="stats">            <div class="stat">                <strong>1.250+</strong>                <span>UNIT DIKERJAKAN</span>            </div>
-            <div class="stat">                <strong>4.9/5.0</strong>                <span>RATING KEPUASAN</span>            </div>
-            <div class="stat">                <strong>100%</strong>                <span>GARANSI KILAU</span>            </div>        </div>
-    </div>
-    <div class="hero-image">
-        <div class="hero-card">            <h3>PREMIUM DETAILING</h3>
-            <p>                Kombinasi Paint Correction & High-Grade Coating.                Melindungi cat dari baret halus, sinar UV,                jamur air hujan.            </p>        </div>
-    </div>
-</section>
-<!-- SERVICES -->
-<section class="services" id="services">
-<div class="container">
-<div class="section-title">    <div class="mini">Layanan Profesional</div>    <h2>Pilih Treatment Kendaraan Anda</h2>    <p>Detailing lengkap dengan hasil maksimal.</p></div>
-<div class="service-grid">
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Signature Motor Detailing Wash</h3>        <p>            Cuci detail menyeluruh sampai ke sela mesin,            rantai dan bagian sulit dijangkau.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1,5 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Engine Degreaser & Deep Clean</h3>        <p>            Mengangkat kerak oli membandel, kerak knalpot            dan lumpur kering.        </p>        <div class="price">Rp 100.000</div>        <div class="duration"> ± 2 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>2-Step Paint Correction</h3>        <p>            Mengurangi swirl mark, baret halus dan            mengembalikan kilau cat.        </p>        <div class="price">Rp 180.000</div>        <div class="duration"> ± 4 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Ceramic Coating 9H+</h3>        <p>            Perlindungan premium terhadap UV,            jamur air dan kontaminasi.        </p>        <div class="price">Rp 500.000</div>        <div class="duration"> ± 1 Hari</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Helmet Deep Clean + Ozone</h3>        <p>            Pencucian busa, sterilisasi UV-C,            ozone dan pembersihan ventilasi.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Car Detailing</h3>        <p>            Perawatan eksterior dan interior mobil            dengan produk detailing profesional.        </p>        <div class="price">Mulai Rp 250.000</div>        <div class="duration">Hubungi admin untuk detail</div>    </div>
-</div>
-</div></section>
-<!-- CALCULATOR -->
-<section id="calculator">
-<div class="container">
-<div class="section-title">    <div class="mini">Harga Transparan</div>    <h2>Kalkulator Harga Instan</h2>    <p>Hitung estimasi biaya detailing kendaraan Anda.</p></div>
-<div class="calculator">
-<div class="calc-box">
-    <h3>1. Pilih Kendaraan</h3>
-    <div class="form-group">        <label>Kategori</label>
-        <select id="vehicle" class="form-control" onchange="calculate()">            <option value="0">Pilih kategori</option>            <option value="0">Bebek / Matic Kecil</option>            <option value="25000">Matic Besar / Sport (+Rp25.000)</option>            <option value="50000">Big Bike / Moge (+Rp50.000)</option>        </select>    </div>
-    <h3>2. Pilih Lokasi</h3>
-    <div class="form-group">
-        <select id="location" class="form-control" onchange="calculate()">
-            <option value="0">                Workshop Garasi - Gratis Transport            </option>
-            <option value="0">                Home Service - Zona 1 (Dekat Workshop)            </option>
-            <option value="25000">                Home Service - Zona 2            </option>
-            <option value="45000">                Home Service - Zona 3            </option>
-            <option value="75000">                Home Service - Zona 4 / Luar Kota            </option>
-        </select>
-    </div>
-    <h3>3. Pilih Treatment</h3>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="50000"            data-name="Signature Motor Detailing Wash"            checked            onchange="calculate()"        >        <span>            <b>Signature Motor Detailing Wash</b><br>            <small>Rp 50.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="100000"            data-name="Engine Degreaser & Deep Clean"            onchange="calculate()"        >        <span>            <b>Engine Degreaser & Deep Clean</b><br>            <small>Rp 100.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="180000"            data-name="2-Step Paint Correction"            onchange="calculate()"        >        <span>            <b>2-Step Paint Correctio<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Haryadi Garage | Workshop & Home Detailing</title>
-<meta name="description"content="Haryadi Garage - Workshop dan Home Service Detailing Motor, Mobil & Helm.">
-<style>*{    margin:0;    padding:0;    box-sizing:border-box;}
-:root{    --orange:#ff8a00;    --yellow:#ffd21c;    --blue:#0755d9;    --cyan:#20e0c2;    --dark:#050914;    --dark2:#08132c;    --card:#0d1c3e;    --card2:#122856;    --white:#fff;    --muted:#aebbd5;}
-html{    scroll-behavior:smooth;}
-body{    font-family:Arial,Helvetica,sans-serif;    background:        radial-gradient(circle at 80% 20%,rgba(0,87,255,.25),transparent 30%),        radial-gradient(circle at 20% 70%,rgba(255,130,0,.12),transparent 25%),        var(--dark);    color:white;    overflow-x:hidden;}
-a{    color:inherit;    text-decoration:none;}
-button,input,select,textarea{    font-family:inherit;}
-/* ================= NAVBAR ================= */
-.topbar{    background:linear-gradient(90deg,#ff5b16,#ff9b00);    color:#171717;    padding:8px 5%;    font-size:13px;    font-weight:bold;    display:flex;    justify-content:space-between;}
-.navbar{    position:sticky;    top:0;    z-index:1000;    display:flex;    align-items:center;    justify-content:space-between;    gap:20px;    padding:14px 5%;    background:rgba(3,8,20,.94);    backdrop-filter:blur(15px);    border-bottom:1px solid rgba(255,255,255,.08);}
-.logo{    display:flex;    align-items:center;    gap:12px;    min-width:220px;}
-.logo-icon{    width:45px;    height:45px;    border-radius:13px;    background:var(--orange);    display:grid;    place-items:center;    font-size:24px;}
-.logo h1{    font-size:20px;}
-.logo span{    color:var(--orange);}
-.logo small{    display:block;    color:#8491ab;    font-size:10px;    letter-spacing:2px;    margin-top:3px;}
-.nav-links{    display:flex;    gap:8px;    align-items:center;}
-.nav-links a,.nav-btn{    padding:12px 13px;    border-radius:10px;    color:#b9c4da;    font-size:14px;    font-weight:bold;    transition:.25s;}
-.nav-links a:hover{    background:#10234b;    color:white;}
-.nav-cta{    background:var(--orange)!important;    color:#151515!important;}
-.whatsapp{    color:#20e0a8!important;}
-.mobile-menu{    display:none;    font-size:28px;    cursor:pointer;}
-/* ================= HERO ================= */
-.hero{    max-width:1200px;    margin:auto;    min-height:650px;    padding:100px 5%;    display:grid;    grid-template-columns:1.1fr .9fr;    align-items:center;    gap:60px;}
-.badge{    display:inline-block;    border:1px solid rgba(255,159,0,.5);    background:rgba(255,145,0,.12);    padding:9px 15px;    border-radius:30px;    color:#ffb82e;    font-size:13px;    margin-bottom:25px;}
-.hero h2{    font-size:58px;    line-height:1.05;    margin-bottom:22px;}
-.hero h2 span{    color:var(--yellow);}
-.hero p{    color:#bdc8db;    font-size:17px;    line-height:1.7;    max-width:650px;}
-.hero-buttons{    display:flex;    gap:15px;    margin-top:32px;    flex-wrap:wrap;}
-.btn{    border:none;    cursor:pointer;    padding:16px 25px;    border-radius:13px;    font-weight:bold;    font-size:15px;    transition:.25s;}
-.btn:hover{    transform:translateY(-3px);}
-.btn-primary{    background:linear-gradient(135deg,#ff8b00,#ffc400);    color:#151515;}
-.btn-secondary{    background:#102652;    border:1px solid #31538e;    color:white;}
-.stats{    display:flex;    gap:50px;    margin-top:50px;}
-.stat strong{    display:block;    font-size:28px;}
-.stat span{    color:#8998b5;    font-size:12px;}
-.hero-image{    height:440px;    border-radius:25px;    overflow:hidden;    position:relative;    border:1px solid #304c80;    background:        linear-gradient(135deg,rgba(255,90,0,.3),rgba(0,40,100,.4)),        url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=80")        center/cover;    box-shadow:0 30px 80px rgba(0,0,0,.5);}
-.hero-card{    position:absolute;    bottom:20px;    left:20px;    right:20px;    background:rgba(7,20,50,.92);    padding:22px;    border-radius:16px;    border:1px solid #42649b;}
-.hero-card h3{    color:#ffc72b;    margin-bottom:8px;}
-.hero-card p{    font-size:13px;}
-/* ================= SECTION ================= */
-section{    padding:90px 5%;}
-.container{    max-width:1200px;    margin:auto;}
-.section-title{    text-align:center;    margin-bottom:45px;}
-.section-title .mini{    color:#ffae19;    font-weight:bold;    font-size:13px;    text-transform:uppercase;    letter-spacing:1px;}
-.section-title h2{    font-size:38px;    margin:10px 0;}
-.section-title p{    color:#91a0bb;}
-/* ================= SERVICE ================= */
-.services{    background:linear-gradient(180deg,#061027,#08183a);}
-.service-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:20px;}
-.service-card{    background:linear-gradient(145deg,#102653,#091633);    border:1px solid #203e70;    padding:28px;    border-radius:20px;    transition:.3s;}
-.service-card:hover{    transform:translateY(-7px);    border-color:var(--orange);}
-.service-icon{    font-size:35px;    margin-bottom:18px;}
-.service-card h3{    margin-bottom:10px;}
-.service-card p{    color:#9aa9c4;    line-height:1.6;    font-size:14px;}
-.price{    color:#ffd21c;    font-size:23px;    font-weight:bold;    margin-top:20px;}
-.duration{    color:#7184a8;    font-size:12px;    margin-top:5px;}
-/* ================= CALCULATOR ================= */
-.calculator{    display:grid;    grid-template-columns:1fr 380px;    gap:25px;}
-.calc-box,.summary{    background:#091735;    border:1px solid #203d70;    border-radius:20px;    padding:28px;}
-.calc-box h3,.summary h3{    margin-bottom:25px;}
-.form-group{    margin-bottom:18px;}
-.form-group label{    display:block;    color:#9eacc5;    font-size:13px;    margin-bottom:8px;}
-.form-control{    width:100%;    background:#0d2148;    border:1px solid #29477a;    border-radius:10px;    padding:14px;    color:white;    outline:none;}
-.form-control:focus{    border-color:var(--orange);}
-.check-service{    display:flex;    align-items:center;    gap:12px;    background:#0d2148;    padding:15px;    border-radius:10px;    margin-bottom:10px;    cursor:pointer;    border:1px solid transparent;}
-.check-service:hover{    border-color:#3e639f;}
-.check-service input{    accent-color:var(--orange);}
-.summary{    height:max-content;    position:sticky;    top:100px;}
-.summary-row{    display:flex;    justify-content:space-between;    padding:14px 0;    border-bottom:1px solid #20365f;    color:#a7b5ce;}
-.total{    display:flex;    justify-content:space-between;    margin-top:20px;    font-size:22px;    font-weight:bold;}
-.total strong{    color:#ffd21c;}
-/* ================= BOOKING ================= */
-.booking{    background:        linear-gradient(rgba(3,8,20,.9),rgba(3,8,20,.94)),        url("https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1500&q=80")        center/cover;}
-.booking-box{    max-width:900px;    margin:auto;    background:rgba(8,22,52,.94);    border:1px solid #294b84;    border-radius:25px;    padding:35px;}
-.booking-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:20px;}
-/* ================= TRACKING ================= */
-.tracking{    background:#07132d;}
-.track-form{    max-width:700px;    margin:auto;    display:flex;    gap:10px;}
-.track-form input{    flex:1;}
-.track-result{    max-width:900px;    margin:30px auto 0;    display:none;    background:#0c2047;    border:1px solid #30548c;    padding:30px;    border-radius:20px;}
-.timeline{    display:grid;    grid-template-columns:repeat(5,1fr);    gap:10px;    margin-top:30px;}
-.step{    text-align:center;    padding:15px 5px;    color:#62769c;}
-.step.active{    color:#20e0c2;}
-.step-number{    width:40px;    height:40px;    border-radius:50%;    display:grid;    place-items:center;    margin:auto auto 8px;    background:#132b56;    border:1px solid #34558a;}
-.step.active .step-number{    background:#20e0c2;    color:#07132d;}
-/* ================= CATALOG ================= */
-.catalog-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:22px;}
-.product{    overflow:hidden;    background:#0c1c3d;    border:1px solid #284675;    border-radius:20px;}
-.product-image{    height:230px;    background-size:cover;    background-position:center;}
-.product-body{    padding:22px;}
-.product-body small{    color:#8fa2c5;}
-.product-body h3{    margin:7px 0 15px;}
-.product-price{    color:#ffd21c;    font-weight:bold;    font-size:21px;}
-/* ================= WORKSHOP ================= */
-.workshop-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:30px;}
-.workshop-info{    background:#0b1d41;    border:1px solid #284878;    padding:30px;    border-radius:20px;}
-.info{    display:flex;    gap:15px;    margin:20px 0;}
-.info-icon{    font-size:25px;}
-.info h4{    margin-bottom:5px;}
-.info p{    color:#9aa9c4;    font-size:14px;    line-height:1.6;}
-/* ================= FOOTER ================= */
-footer{    background:#030711;    padding:50px 5%;    border-top:1px solid #152646;}
-.footer-inner{    max-width:1200px;    margin:auto;    display:grid;    grid-template-columns:2fr 1fr 1fr;    gap:30px;}
-footer p{    color:#7585a3;    line-height:1.7;    margin-top:12px;}
-footer h4{    margin-bottom:15px;}
-footer a{    display:block;    color:#8999b8;    margin:10px 0;}
-.copyright{    text-align:center;    color:#53627d;    margin-top:40px;    font-size:13px;}
-/* ================= MODAL ================= */
-.modal{    position:fixed;    inset:0;    background:rgba(0,0,0,.75);    z-index:2000;    display:none;    align-items:center;    justify-content:center;    padding:20px;}
-.modal.show{    display:flex;}
-.modal-content{    width:100%;    max-width:650px;    background:#091936;    border:1px solid #3c5d91;    border-radius:20px;    padding:30px;    max-height:90vh;    overflow:auto;}
-.modal-header{    display:flex;    justify-content:space-between;    align-items:center;    margin-bottom:25px;}
-.close{    background:#17345e;    border:0;    color:white;    width:40px;    height:40px;    border-radius:10px;    cursor:pointer;    font-size:20px;}
-.success{    text-align:center;    padding:30px;}
-.booking-code{    font-size:28px;    color:#ffd21c;    font-weight:bold;    margin:20px 0;    letter-spacing:2px;}
-/* ================= RESPONSIVE ================= */
-@media(max-width:950px){
-    .nav-links{        position:absolute;        top:75px;        left:0;        right:0;        background:#061027;        display:none;        flex-direction:column;        padding:20px;    }
-    .nav-links.show{        display:flex;    }
-    .mobile-menu{        display:block;    }
-    .hero{        grid-template-columns:1fr;        padding-top:60px;    }
-    .hero h2{        font-size:43px;    }
-    .service-grid,    .catalog-grid{        grid-template-columns:1fr 1fr;    }
-    .calculator,    .workshop-grid{        grid-template-columns:1fr;    }
-    .summary{        position:static;    }}
-@media(max-width:650px){
-    .topbar{        font-size:10px;    }
-    .logo{        min-width:auto;    }
-    .logo h1{        font-size:16px;    }
-    .logo small{        display:none;    }
-    section{        padding:65px 5%;    }
-    .hero{        padding:60px 5%;    }
-    .hero h2{        font-size:36px;    }
-    .hero-image{        height:330px;    }
-    .stats{        gap:20px;        flex-wrap:wrap;    }
-    .stat strong{        font-size:23px;    }
-    .service-grid,    .catalog-grid,    .booking-grid{        grid-template-columns:1fr;    }
-    .section-title h2{        font-size:30px;    }
-    .track-form{        flex-direction:column;    }
-    .timeline{        grid-template-columns:1fr;    }
-    .footer-inner{        grid-template-columns:1fr;    }}</style></head>
-<body>
-<!-- TOP BAR -->
-<div class="topbar">    <span> Haryadi Garage Home Service Detailing: Melayani Panggilan se-Jabodetabek!</span>    <span> Workshop Bintaro</span></div>
-<!-- NAVBAR -->
-<nav class="navbar">
-    <a href="#home" class="logo">        <div class="logo-icon"> </div>        <div>            <h1>HARYADI <span>GARAGE</span></h1>            <small>WORKSHOP & HOME DETAILING</small>        </div>    </a>
-    <div class="mobile-menu" onclick="toggleMenu()">☰</div>
-    <div class="nav-links" id="navLinks">        <a href="#services">Layanan & Harga</a>        <a href="#calculator">Kalkulator</a>        <a href="#catalog">Katalog</a>        <a href="#workshop">Before & After</a>        <a href="#tracking"> Lacak Booking</a>        <a class="whatsapp" href="https://wa.me/6281234567890" target="_blank">            WhatsApp        </a>        <a class="nav-cta" href="#booking"> Booking Sekarang</a>    </div>
-</nav>
-<!-- HERO -->
-<section class="hero" id="home">
-    <div>
-        <div class="badge">            WORKSHOP DETAILING & HOME SERVICE        </div>
-        <h2>            Kembalikan Kilau Sempurna            <span>Motor, Mobil & Helm Anda</span>        </h2>
-        <p>            Haryadi Garage menghadirkan perawatan detailing profesional            berstandar tinggi. Pilih pengerjaan steril di workshop atau            tim kami datang langsung ke rumah/kantor Anda.        </p>
-        <div class="hero-buttons">            <a href="#booking" class="btn btn-primary">                Booking Workshop / Home Service →            </a>
-            <a href="#calculator" class="btn btn-secondary">                Kalkulator Harga            </a>        </div>
-        <div class="stats">            <div class="stat">                <strong>1.250+</strong>                <span>UNIT DIKERJAKAN</span>            </div>
-            <div class="stat">                <strong>4.9/5.0</strong>                <span>RATING KEPUASAN</span>            </div>
-            <div class="stat">                <strong>100%</strong>                <span>GARANSI KILAU</span>            </div>        </div>
-    </div>
-    <div class="hero-image">
-        <div class="hero-card">            <h3>PREMIUM DETAILING</h3>
-            <p>                Kombinasi Paint Correction & High-Grade Coating.                Melindungi cat dari baret halus, sinar UV,                jamur air hujan.            </p>        </div>
-    </div>
-</section>
-<!-- SERVICES -->
-<section class="services" id="services">
-<div class="container">
-<div class="section-title">    <div class="mini">Layanan Profesional</div>    <h2>Pilih Treatment Kendaraan Anda</h2>    <p>Detailing lengkap dengan hasil maksimal.</p></div>
-<div class="service-grid">
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Signature Motor Detailing Wash</h3>        <p>            Cuci detail menyeluruh sampai ke sela mesin,            rantai dan bagian sulit dijangkau.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1,5 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Engine Degreaser & Deep Clean</h3>        <p>            Mengangkat kerak oli membandel, kerak knalpot            dan lumpur kering.        </p>        <div class="price">Rp 100.000</div>        <div class="duration"> ± 2 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>2-Step Paint Correction</h3>        <p>            Mengurangi swirl mark, baret halus dan            mengembalikan kilau cat.        </p>        <div class="price">Rp 180.000</div>        <div class="duration"> ± 4 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Ceramic Coating 9H+</h3>        <p>            Perlindungan premium terhadap UV,            jamur air dan kontaminasi.        </p>        <div class="price">Rp 500.000</div>        <div class="duration"> ± 1 Hari</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Helmet Deep Clean + Ozone</h3>        <p>            Pencucian busa, sterilisasi UV-C,            ozone dan pembersihan ventilasi.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Car Detailing</h3>        <p>            Perawatan eksterior dan interior mobil            dengan produk detailing profesional.        </p>        <div class="price">Mulai Rp 250.000</div>        <div class="duration">Hubungi admin untuk detail</div>    </div>
-</div>
-</div></section>
-<!-- CALCULATOR -->
-<section id="calculator">
-<div class="container">
-<div class="section-title">    <div class="mini">Harga Transparan</div>    <h2>Kalkulator Harga Instan</h2>    <p>Hitung estimasi biaya detailing kendaraan Anda.</p></div>
-<div class="calculator">
-<div class="calc-box">
-    <h3>1. Pilih Kendaraan</h3>
-    <div class="form-group">        <label>Kategori</label>
-        <select id="vehicle" class="form-control" onchange="calculate()">            <option value="0">Pilih kategori</option>            <option value="0">Bebek / Matic Kecil</option>            <option value="25000">Matic Besar / Sport (+Rp25.000)</option>            <option value="50000">Big Bike / Moge (+Rp50.000)</option>        </select>    </div>
-    <h3>2. Pilih Lokasi</h3>
-    <div class="form-group">
-        <select id="location" class="form-control" onchange="calculate()">
-            <option value="0">                Workshop Garasi - Gratis Transport            </option>
-            <option value="0">                Home Service - Zona 1 (Dekat Workshop)            </option>
-            <option value="25000">                Home Service - Zona 2            </option>
-            <option value="45000">                Home Service - Zona 3            </option>
-            <option value="75000">                Home Service - Zona 4 / Luar Kota            </option>
-        </select>
-    </div>
-    <h3>3. Pilih Treatment</h3>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="50000"            data-name="Signature Motor Detailing Wash"            checked            onchange="calculate()"        >        <span>            <b>Signature Motor Detailing Wash</b><br>            <small>Rp 50.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="100000"            data-name="Engine Degreaser & Deep Clean"            onchange="calculate()"        >        <span>            <b>Engine Degreaser & Deep Clean</b><br>            <small>Rp 100.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="180000"            data-name="2-Step Paint Correction"            onchange="calculate()"        >        <span>            <b>2-Step Paint Correctio<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Haryadi Garage | Workshop & Home Detailing</title>
-<meta name="description"content="Haryadi Garage - Workshop dan Home Service Detailing Motor, Mobil & Helm.">
-<style>*{    margin:0;    padding:0;    box-sizing:border-box;}
-:root{    --orange:#ff8a00;    --yellow:#ffd21c;    --blue:#0755d9;    --cyan:#20e0c2;    --dark:#050914;    --dark2:#08132c;    --card:#0d1c3e;    --card2:#122856;    --white:#fff;    --muted:#aebbd5;}
-html{    scroll-behavior:smooth;}
-body{    font-family:Arial,Helvetica,sans-serif;    background:        radial-gradient(circle at 80% 20%,rgba(0,87,255,.25),transparent 30%),        radial-gradient(circle at 20% 70%,rgba(255,130,0,.12),transparent 25%),        var(--dark);    color:white;    overflow-x:hidden;}
-a{    color:inherit;    text-decoration:none;}
-button,input,select,textarea{    font-family:inherit;}
-/* ================= NAVBAR ================= */
-.topbar{    background:linear-gradient(90deg,#ff5b16,#ff9b00);    color:#171717;    padding:8px 5%;    font-size:13px;    font-weight:bold;    display:flex;    justify-content:space-between;}
-.navbar{    position:sticky;    top:0;    z-index:1000;    display:flex;    align-items:center;    justify-content:space-between;    gap:20px;    padding:14px 5%;    background:rgba(3,8,20,.94);    backdrop-filter:blur(15px);    border-bottom:1px solid rgba(255,255,255,.08);}
-.logo{    display:flex;    align-items:center;    gap:12px;    min-width:220px;}
-.logo-icon{    width:45px;    height:45px;    border-radius:13px;    background:var(--orange);    display:grid;    place-items:center;    font-size:24px;}
-.logo h1{    font-size:20px;}
-.logo span{    color:var(--orange);}
-.logo small{    display:block;    color:#8491ab;    font-size:10px;    letter-spacing:2px;    margin-top:3px;}
-.nav-links{    display:flex;    gap:8px;    align-items:center;}
-.nav-links a,.nav-btn{    padding:12px 13px;    border-radius:10px;    color:#b9c4da;    font-size:14px;    font-weight:bold;    transition:.25s;}
-.nav-links a:hover{    background:#10234b;    color:white;}
-.nav-cta{    background:var(--orange)!important;    color:#151515!important;}
-.whatsapp{    color:#20e0a8!important;}
-.mobile-menu{    display:none;    font-size:28px;    cursor:pointer;}
-/* ================= HERO ================= */
-.hero{    max-width:1200px;    margin:auto;    min-height:650px;    padding:100px 5%;    display:grid;    grid-template-columns:1.1fr .9fr;    align-items:center;    gap:60px;}
-.badge{    display:inline-block;    border:1px solid rgba(255,159,0,.5);    background:rgba(255,145,0,.12);    padding:9px 15px;    border-radius:30px;    color:#ffb82e;    font-size:13px;    margin-bottom:25px;}
-.hero h2{    font-size:58px;    line-height:1.05;    margin-bottom:22px;}
-.hero h2 span{    color:var(--yellow);}
-.hero p{    color:#bdc8db;    font-size:17px;    line-height:1.7;    max-width:650px;}
-.hero-buttons{    display:flex;    gap:15px;    margin-top:32px;    flex-wrap:wrap;}
-.btn{    border:none;    cursor:pointer;    padding:16px 25px;    border-radius:13px;    font-weight:bold;    font-size:15px;    transition:.25s;}
-.btn:hover{    transform:translateY(-3px);}
-.btn-primary{    background:linear-gradient(135deg,#ff8b00,#ffc400);    color:#151515;}
-.btn-secondary{    background:#102652;    border:1px solid #31538e;    color:white;}
-.stats{    display:flex;    gap:50px;    margin-top:50px;}
-.stat strong{    display:block;    font-size:28px;}
-.stat span{    color:#8998b5;    font-size:12px;}
-.hero-image{    height:440px;    border-radius:25px;    overflow:hidden;    position:relative;    border:1px solid #304c80;    background:        linear-gradient(135deg,rgba(255,90,0,.3),rgba(0,40,100,.4)),        url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=80")        center/cover;    box-shadow:0 30px 80px rgba(0,0,0,.5);}
-.hero-card{    position:absolute;    bottom:20px;    left:20px;    right:20px;    background:rgba(7,20,50,.92);    padding:22px;    border-radius:16px;    border:1px solid #42649b;}
-.hero-card h3{    color:#ffc72b;    margin-bottom:8px;}
-.hero-card p{    font-size:13px;}
-/* ================= SECTION ================= */
-section{    padding:90px 5%;}
-.container{    max-width:1200px;    margin:auto;}
-.section-title{    text-align:center;    margin-bottom:45px;}
-.section-title .mini{    color:#ffae19;    font-weight:bold;    font-size:13px;    text-transform:uppercase;    letter-spacing:1px;}
-.section-title h2{    font-size:38px;    margin:10px 0;}
-.section-title p{    color:#91a0bb;}
-/* ================= SERVICE ================= */
-.services{    background:linear-gradient(180deg,#061027,#08183a);}
-.service-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:20px;}
-.service-card{    background:linear-gradient(145deg,#102653,#091633);    border:1px solid #203e70;    padding:28px;    border-radius:20px;    transition:.3s;}
-.service-card:hover{    transform:translateY(-7px);    border-color:var(--orange);}
-.service-icon{    font-size:35px;    margin-bottom:18px;}
-.service-card h3{    margin-bottom:10px;}
-.service-card p{    color:#9aa9c4;    line-height:1.6;    font-size:14px;}
-.price{    color:#ffd21c;    font-size:23px;    font-weight:bold;    margin-top:20px;}
-.duration{    color:#7184a8;    font-size:12px;    margin-top:5px;}
-/* ================= CALCULATOR ================= */
-.calculator{    display:grid;    grid-template-columns:1fr 380px;    gap:25px;}
-.calc-box,.summary{    background:#091735;    border:1px solid #203d70;    border-radius:20px;    padding:28px;}
-.calc-box h3,.summary h3{    margin-bottom:25px;}
-.form-group{    margin-bottom:18px;}
-.form-group label{    display:block;    color:#9eacc5;    font-size:13px;    margin-bottom:8px;}
-.form-control{    width:100%;    background:#0d2148;    border:1px solid #29477a;    border-radius:10px;    padding:14px;    color:white;    outline:none;}
-.form-control:focus{    border-color:var(--orange);}
-.check-service{    display:flex;    align-items:center;    gap:12px;    background:#0d2148;    padding:15px;    border-radius:10px;    margin-bottom:10px;    cursor:pointer;    border:1px solid transparent;}
-.check-service:hover{    border-color:#3e639f;}
-.check-service input{    accent-color:var(--orange);}
-.summary{    height:max-content;    position:sticky;    top:100px;}
-.summary-row{    display:flex;    justify-content:space-between;    padding:14px 0;    border-bottom:1px solid #20365f;    color:#a7b5ce;}
-.total{    display:flex;    justify-content:space-between;    margin-top:20px;    font-size:22px;    font-weight:bold;}
-.total strong{    color:#ffd21c;}
-/* ================= BOOKING ================= */
-.booking{    background:        linear-gradient(rgba(3,8,20,.9),rgba(3,8,20,.94)),        url("https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1500&q=80")        center/cover;}
-.booking-box{    max-width:900px;    margin:auto;    background:rgba(8,22,52,.94);    border:1px solid #294b84;    border-radius:25px;    padding:35px;}
-.booking-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:20px;}
-/* ================= TRACKING ================= */
-.tracking{    background:#07132d;}
-.track-form{    max-width:700px;    margin:auto;    display:flex;    gap:10px;}
-.track-form input{    flex:1;}
-.track-result{    max-width:900px;    margin:30px auto 0;    display:none;    background:#0c2047;    border:1px solid #30548c;    padding:30px;    border-radius:20px;}
-.timeline{    display:grid;    grid-template-columns:repeat(5,1fr);    gap:10px;    margin-top:30px;}
-.step{    text-align:center;    padding:15px 5px;    color:#62769c;}
-.step.active{    color:#20e0c2;}
-.step-number{    width:40px;    height:40px;    border-radius:50%;    display:grid;    place-items:center;    margin:auto auto 8px;    background:#132b56;    border:1px solid #34558a;}
-.step.active .step-number{    background:#20e0c2;    color:#07132d;}
-/* ================= CATALOG ================= */
-.catalog-grid{    display:grid;    grid-template-columns:repeat(3,1fr);    gap:22px;}
-.product{    overflow:hidden;    background:#0c1c3d;    border:1px solid #284675;    border-radius:20px;}
-.product-image{    height:230px;    background-size:cover;    background-position:center;}
-.product-body{    padding:22px;}
-.product-body small{    color:#8fa2c5;}
-.product-body h3{    margin:7px 0 15px;}
-.product-price{    color:#ffd21c;    font-weight:bold;    font-size:21px;}
-/* ================= WORKSHOP ================= */
-.workshop-grid{    display:grid;    grid-template-columns:1fr 1fr;    gap:30px;}
-.workshop-info{    background:#0b1d41;    border:1px solid #284878;    padding:30px;    border-radius:20px;}
-.info{    display:flex;    gap:15px;    margin:20px 0;}
-.info-icon{    font-size:25px;}
-.info h4{    margin-bottom:5px;}
-.info p{    color:#9aa9c4;    font-size:14px;    line-height:1.6;}
-/* ================= FOOTER ================= */
-footer{    background:#030711;    padding:50px 5%;    border-top:1px solid #152646;}
-.footer-inner{    max-width:1200px;    margin:auto;    display:grid;    grid-template-columns:2fr 1fr 1fr;    gap:30px;}
-footer p{    color:#7585a3;    line-height:1.7;    margin-top:12px;}
-footer h4{    margin-bottom:15px;}
-footer a{    display:block;    color:#8999b8;    margin:10px 0;}
-.copyright{    text-align:center;    color:#53627d;    margin-top:40px;    font-size:13px;}
-/* ================= MODAL ================= */
-.modal{    position:fixed;    inset:0;    background:rgba(0,0,0,.75);    z-index:2000;    display:none;    align-items:center;    justify-content:center;    padding:20px;}
-.modal.show{    display:flex;}
-.modal-content{    width:100%;    max-width:650px;    background:#091936;    border:1px solid #3c5d91;    border-radius:20px;    padding:30px;    max-height:90vh;    overflow:auto;}
-.modal-header{    display:flex;    justify-content:space-between;    align-items:center;    margin-bottom:25px;}
-.close{    background:#17345e;    border:0;    color:white;    width:40px;    height:40px;    border-radius:10px;    cursor:pointer;    font-size:20px;}
-.success{    text-align:center;    padding:30px;}
-.booking-code{    font-size:28px;    color:#ffd21c;    font-weight:bold;    margin:20px 0;    letter-spacing:2px;}
-/* ================= RESPONSIVE ================= */
-@media(max-width:950px){
-    .nav-links{        position:absolute;        top:75px;        left:0;        right:0;        background:#061027;        display:none;        flex-direction:column;        padding:20px;    }
-    .nav-links.show{        display:flex;    }
-    .mobile-menu{        display:block;    }
-    .hero{        grid-template-columns:1fr;        padding-top:60px;    }
-    .hero h2{        font-size:43px;    }
-    .service-grid,    .catalog-grid{        grid-template-columns:1fr 1fr;    }
-    .calculator,    .workshop-grid{        grid-template-columns:1fr;    }
-    .summary{        position:static;    }}
-@media(max-width:650px){
-    .topbar{        font-size:10px;    }
-    .logo{        min-width:auto;    }
-    .logo h1{        font-size:16px;    }
-    .logo small{        display:none;    }
-    section{        padding:65px 5%;    }
-    .hero{        padding:60px 5%;    }
-    .hero h2{        font-size:36px;    }
-    .hero-image{        height:330px;    }
-    .stats{        gap:20px;        flex-wrap:wrap;    }
-    .stat strong{        font-size:23px;    }
-    .service-grid,    .catalog-grid,    .booking-grid{        grid-template-columns:1fr;    }
-    .section-title h2{        font-size:30px;    }
-    .track-form{        flex-direction:column;    }
-    .timeline{        grid-template-columns:1fr;    }
-    .footer-inner{        grid-template-columns:1fr;    }}</style></head>
-<body>
-<!-- TOP BAR -->
-<div class="topbar">    <span> Haryadi Garage Home Service Detailing: Melayani Panggilan se-Jabodetabek!</span>    <span> Workshop Bintaro</span></div>
-<!-- NAVBAR -->
-<nav class="navbar">
-    <a href="#home" class="logo">        <div class="logo-icon"> </div>        <div>            <h1>HARYADI <span>GARAGE</span></h1>            <small>WORKSHOP & HOME DETAILING</small>        </div>    </a>
-    <div class="mobile-menu" onclick="toggleMenu()">☰</div>
-    <div class="nav-links" id="navLinks">        <a href="#services">Layanan & Harga</a>        <a href="#calculator">Kalkulator</a>        <a href="#catalog">Katalog</a>        <a href="#workshop">Before & After</a>        <a href="#tracking"> Lacak Booking</a>        <a class="whatsapp" href="https://wa.me/6281234567890" target="_blank">            WhatsApp        </a>        <a class="nav-cta" href="#booking"> Booking Sekarang</a>    </div>
-</nav>
-<!-- HERO -->
-<section class="hero" id="home">
-    <div>
-        <div class="badge">            WORKSHOP DETAILING & HOME SERVICE        </div>
-        <h2>            Kembalikan Kilau Sempurna            <span>Motor, Mobil & Helm Anda</span>        </h2>
-        <p>            Haryadi Garage menghadirkan perawatan detailing profesional            berstandar tinggi. Pilih pengerjaan steril di workshop atau            tim kami datang langsung ke rumah/kantor Anda.        </p>
-        <div class="hero-buttons">            <a href="#booking" class="btn btn-primary">                Booking Workshop / Home Service →            </a>
-            <a href="#calculator" class="btn btn-secondary">                Kalkulator Harga            </a>        </div>
-        <div class="stats">            <div class="stat">                <strong>1.250+</strong>                <span>UNIT DIKERJAKAN</span>            </div>
-            <div class="stat">                <strong>4.9/5.0</strong>                <span>RATING KEPUASAN</span>            </div>
-            <div class="stat">                <strong>100%</strong>                <span>GARANSI KILAU</span>            </div>        </div>
-    </div>
-    <div class="hero-image">
-        <div class="hero-card">            <h3>PREMIUM DETAILING</h3>
-            <p>                Kombinasi Paint Correction & High-Grade Coating.                Melindungi cat dari baret halus, sinar UV,                jamur air hujan.            </p>        </div>
-    </div>
-</section>
-<!-- SERVICES -->
-<section class="services" id="services">
-<div class="container">
-<div class="section-title">    <div class="mini">Layanan Profesional</div>    <h2>Pilih Treatment Kendaraan Anda</h2>    <p>Detailing lengkap dengan hasil maksimal.</p></div>
-<div class="service-grid">
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Signature Motor Detailing Wash</h3>        <p>            Cuci detail menyeluruh sampai ke sela mesin,            rantai dan bagian sulit dijangkau.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1,5 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Engine Degreaser & Deep Clean</h3>        <p>            Mengangkat kerak oli membandel, kerak knalpot            dan lumpur kering.        </p>        <div class="price">Rp 100.000</div>        <div class="duration"> ± 2 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>2-Step Paint Correction</h3>        <p>            Mengurangi swirl mark, baret halus dan            mengembalikan kilau cat.        </p>        <div class="price">Rp 180.000</div>        <div class="duration"> ± 4 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Ceramic Coating 9H+</h3>        <p>            Perlindungan premium terhadap UV,            jamur air dan kontaminasi.        </p>        <div class="price">Rp 500.000</div>        <div class="duration"> ± 1 Hari</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Helmet Deep Clean + Ozone</h3>        <p>            Pencucian busa, sterilisasi UV-C,            ozone dan pembersihan ventilasi.        </p>        <div class="price">Rp 50.000</div>        <div class="duration"> ± 1 Jam</div>    </div>
-    <div class="service-card">        <div class="service-icon"> </div>        <h3>Car Detailing</h3>        <p>            Perawatan eksterior dan interior mobil            dengan produk detailing profesional.        </p>        <div class="price">Mulai Rp 250.000</div>        <div class="duration">Hubungi admin untuk detail</div>    </div>
-</div>
-</div></section>
-<!-- CALCULATOR -->
-<section id="calculator">
-<div class="container">
-<div class="section-title">    <div class="mini">Harga Transparan</div>    <h2>Kalkulator Harga Instan</h2>    <p>Hitung estimasi biaya detailing kendaraan Anda.</p></div>
-<div class="calculator">
-<div class="calc-box">
-    <h3>1. Pilih Kendaraan</h3>
-    <div class="form-group">        <label>Kategori</label>
-        <select id="vehicle" class="form-control" onchange="calculate()">            <option value="0">Pilih kategori</option>            <option value="0">Bebek / Matic Kecil</option>            <option value="25000">Matic Besar / Sport (+Rp25.000)</option>            <option value="50000">Big Bike / Moge (+Rp50.000)</option>        </select>    </div>
-    <h3>2. Pilih Lokasi</h3>
-    <div class="form-group">
-        <select id="location" class="form-control" onchange="calculate()">
-            <option value="0">                Workshop Garasi - Gratis Transport            </option>
-            <option value="0">                Home Service - Zona 1 (Dekat Workshop)            </option>
-            <option value="25000">                Home Service - Zona 2            </option>
-            <option value="45000">                Home Service - Zona 3            </option>
-            <option value="75000">                Home Service - Zona 4 / Luar Kota            </option>
-        </select>
-    </div>
-    <h3>3. Pilih Treatment</h3>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="50000"            data-name="Signature Motor Detailing Wash"            checked            onchange="calculate()"        >        <span>            <b>Signature Motor Detailing Wash</b><br>            <small>Rp 50.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="100000"            data-name="Engine Degreaser & Deep Clean"            onchange="calculate()"        >        <span>            <b>Engine Degreaser & Deep Clean</b><br>            <small>Rp 100.000</small>        </span>    </label>
-    <label class="check-service">        <input            type="checkbox"            class="service-check"            value="180000"            data-name="2-Step Paint Correction"            onchange="calculate()"        >        <span>            <b>2-Step Paint Correctio
+    <!-- ============================= -->    <!-- TOP BAR -->    <!-- ============================= -->
+    <div class="top-bar">        <div>            Haryadi Garage Home Service Detailing:            Melayani Panggilan se-Jabodetabek!        </div>
+        <div>            Workshop Bintaro        </div>    </div>
+
+    <!-- ============================= -->    <!-- NAVBAR -->    <!-- ============================= -->
+    <header class="navbar">
+        <div class="logo-area">
+            <div class="logo-icon">                            </div>
+            <div>                <div class="logo">                    HARYADI <span>GARAGE</span>                </div>
+                <div class="logo-subtitle">                    WORKSHOP & HOME DETAILING                </div>            </div>
+        </div>
+
+        <button            class="mobile-menu-button"            onclick="toggleMenu()"        >            ☰        </button>
+
+        <nav            id="mainMenu"            class="main-menu"        >
+            <a href="#services">                Layanan & Harga            </a>
+            <a href="#calculator">                Kalkulator Harga            </a>
+            <a href="#catalog">                Katalog            </a>
+            <a href="#before-after">                Before & After            </a>
+            <a href="#tracking">                Lacak Booking            </a>
+            <a                class="whatsapp-link"                href="https://wa.me/6285771776702"                target="_blank"            >                WhatsApp            </a>
+            <a                class="booking-button"                href="#booking"            >                Booking Sekarang            </a>
+        </nav>
+    </header>
+
+    <!-- ============================= -->    <!-- HERO -->    <!-- ============================= -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-label">                WORKSHOP DETAILING & HOME SERVICE            </div>
+            <h1>                Kembalikan Kilau Sempurna                <span>Motor, Mobil & Helm Anda</span>            </h1>
+            <p>                Haryadi Garage menghadirkan perawatan detailing                profesional berstandar tinggi.                Pilih pengerjaan steril di                <strong>Workshop Garasi</strong>                atau tim kami datang langsung ke                <strong>Rumah / Kantor Anda</strong>                dengan peralatan lengkap.            </p>
+
+            <div class="hero-tags">
+                <span>                    ✓ Paint Correction 2-Step                </span>
+                <span>                    ✓ Engine Deep Degreaser                </span>
+                <span>                    ✓ Ceramic Coating 9H+                </span>
+            </div>
+
+            <div class="hero-buttons">
+                <a                    href="#booking"                    class="btn-primary"                >                    Booking Workshop / Home Service →                </a>
+                <a                    href="#calculator"                    class="btn-secondary"                >                    Kalkulator Harga                </a>
+            </div>
+
+            <div class="statistics">
+                <div>                    <strong>1.250+</strong>                    <small>Unit Dikerjakan</small>                </div>
+                <div>                    <strong>4.9 / 5.0</strong>                    <small>Rating Kepuasan</small>                </div>
+                <div>                    <strong>100%</strong>                    <small>Garansi Kilau</small>                </div>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <div class="image-card">
+                <div class="image-placeholder">                                    </div>
+                <div class="image-card-content">
+                    <span>                        PREMIUM DETAILING                    </span>
+                    <h3>                        Kombinasi Paint Correction                        & High-Grade Coating                    </h3>
+                    <p>                        Melindungi cat dari baret halus,                        sinar UV, dan jamur air hujan.                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->    <!-- SERVICES -->    <!-- ============================= -->
+    <section        id="services"        class="section"    >
+        <div class="section-title">
+            <span>                LAYANAN KAMI            </span>
+            <h2>                Pilihan Detailing Profesional            </h2>
+            <p>                Pilih layanan sesuai kebutuhan kendaraan Anda.            </p>
+        </div>
+
+        <div class="service-grid">
+
+            <div class="service-card">
+                <div class="service-icon">                                    </div>
+                <h3>                    Motorcycle Detailing                </h3>
+                <p>                    Perawatan menyeluruh untuk motor,                    mulai dari cuci detail hingga paint correction.                </p>
+                <strong>                    Mulai Rp 50.000                </strong>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">                                    </div>
+                <h3>                    Car Detailing                </h3>
+                <p>                    Detailing interior dan eksterior                    dengan hasil profesional.                </p>
+                <strong>                    Hubungi Admin                </strong>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">                                    </div>
+                <h3>                    Helmet Spa                </h3>
+                <p>                    Deep cleaning, sterilisasi UV-C,                    ozone dan pembersihan busa helm.                </p>
+                <strong>                    Mulai Rp 50.000                </strong>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">                                    </div>
+                <h3>                    Ceramic Coating                </h3>
+                <p>                    Perlindungan cat dengan coating                    berkualitas tinggi.                </p>
+                <strong>                    Hubungi Admin                </strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->    <!-- CALCULATOR -->    <!-- ============================= -->
+    <section        id="calculator"        class="section calculator-section"    >
+        <div class="section-title">
+            <span>                KALKULATOR            </span>
+            <h2>                Hitung Estimasi Harga            </h2>
+            <p>                Pilih kategori kendaraan dan layanan.            </p>
+        </div>
+
+        <div class="calculator-box">
+            <div class="form-group">
+                <label>                    Kategori Kendaraan                </label>
+                <select id="calculatorVehicle">
+                    <option value="50000">                        Bebek / Matic Kecil                    </option>
+                    <option value="75000">                        Matic Besar / Sport                    </option>
+                    <option value="100000">                        Big Bike / Moge                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>                    Layanan                </label>
+                <select id="calculatorService">
+                    <option value="0">                        Signature Motor Detailing Wash                    </option>
+                    <option value="100000">                        Engine Degreaser & UnderCarriage                    </option>
+                    <option value="180000">                        2-Step Paint Correction & Body Polish                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>                    Lokasi                </label>
+                <select id="calculatorLocation">
+                    <option value="0">                        Workshop Garasi                    </option>
+                    <option value="0">                        Home Service - Zona 1                    </option>
+                    <option value="25000">                        Home Service - Zona 2                    </option>
+                    <option value="45000">                        Home Service - Zona 3                    </option>
+                    <option value="75000">                        Home Service - Zona 4                    </option>
+                </select>
+            </div>
+
+            <button                class="btn-primary full-width"                onclick="calculatePrice()"            >                Hitung Harga            </button>
+
+            <div                id="calculatorResult"                class="calculator-result"            >                <small>                    Total Estimasi                </small>
+                <strong>                    Rp 50.000                </strong>            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->    <!-- CATALOG -->    <!-- ============================= -->
+    <section        id="catalog"        class="section"    >
+        <div class="section-title">
+            <span>                KATALOG            </span>
+            <h2>                Produk Pre-Owned            </h2>
+            <p>                Pilihan motor dan helm pre-owned berkualitas.            </p>
+        </div>
+
+        <div class="product-grid">
+
+            <div class="product-card">
+                <div class="product-image helmet-orange">                                    </div>
+                <div class="product-content">
+                    <span class="available">                        TERSEDIA                    </span>
+                    <h3>                        Half Face Fast-X                        Aerodynamic Matt Carbon                    </h3>
+                    <p>                        Size XL (61–62cm)                    </p>
+                    <strong>                        Rp 380.000                    </strong>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image helmet-black">                                    </div>
+                <div class="product-content">
+                    <span class="available">                        TERSEDIA                    </span>
+                    <h3>                        BOGO Classic Leather                        Strip Edition Jet Black                    </h3>
+                    <p>                        Size M-L All Size                    </p>
+                    <strong>                        Rp 195.000                    </strong>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image helmet-white">                                    </div>
+                <div class="product-content">
+                    <span class="available">                        TERSEDIA                    </span>
+                    <h3>                        Cargloss CFM Retro                        Pearl White Glossy                    </h3>
+                    <p>                        Size L (59–60cm)                    </p>
+                    <strong>                        Rp 245.000                    </strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->    <!-- BEFORE AFTER -->    <!-- ============================= -->
+    <section        id="before-after"        class="section"    >
+        <div class="section-title">
+            <span>                BEFORE & AFTER            </span>
+            <h2>                Lihat Perbedaannya            </h2>
+        </div>
+
+        <div class="before-after-grid">
+            <div>                <div class="before-box">                    BEFORE                </div>
+                <h3>                    Sebelum Detailing                </h3>            </div>
+
+            <div>                <div class="after-box">                    AFTER                </div>
+                <h3>                    Setelah Detailing                </h3>            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->    <!-- BOOKING -->    <!-- ============================= -->
+    <section        id="booking"        class="section booking-section"    >
+        <div class="section-title">
+            <span>                RESERVASI            </span>
+            <h2>                Formulir Reservasi Detailing            </h2>
+            <p>                Workshop Garasi & Layanan Home Service Panggilan            </p>
+        </div>
+
+        <div class="booking-box">
+
+            <div class="form-group">
+                <label>                    Nama Lengkap                </label>
+                <input                    id="customerName"                    type="text"                    placeholder="Masukkan nama lengkap"                >
+            </div>
+
+            <div class="form-group">
+                <label>                    Nomor WhatsApp                </label>
+                <input                    id="customerWhatsapp"                    type="tel"                    placeholder="085xxxxxxxxx"                >
+            </div>
+
+            <div class="form-group">
+                <label>                    Mode Pengerjaan                </label>
+                <select id="bookingMode">
+                    <option value="Workshop Bengkel">                        Workshop Garasi                    </option>
+                    <option value="Home Service">                        Home Service                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>                    Kategori Kendaraan                </label>
+                <select id="bookingVehicle">
+                    <option value="Bebek / Matic Kecil">                        Bebek / Matic Kecil                    </option>
+                    <option value="Matic Besar / Sport">                        Matic Besar / Sport                    </option>
+                    <option value="Big Bike / Moge">                        Big Bike / Moge                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>                    Detail Model & Plat Nomor                </label>
+                <input                    id="vehicleDetail"                    type="text"                    placeholder="Contoh: Yamaha NMAX 2022 (B 1234 XYZ)"                >
+            </div>
+
+            <div class="form-group">
+                <label>                    Pilih Layanan                </label>
+                <select id="bookingService">
+                    <option value="Signature Motor Detailing Wash">                        Signature Motor Detailing Wash - Rp 50.000                    </option>
+                    <option value="Engine Degreaser & UnderCarriage Deep Clean">                        Engine Degreaser & UnderCarriage - Rp 100.000                    </option>
+                    <option value="2-Step Paint Correction & Body Polish">                        2-Step Paint Correction & Body Polish - Rp 180.000                    </option>
+                    <option value="Cuci Helm Deep Clean + Ozone Anti-Bakteri">                        Cuci Helm Deep Clean + Ozone - Rp 50.000                    </option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>                        Tanggal                    </label>
+                    <input                        id="bookingDate"                        type="date"                    >
+                </div>
+
+                <div class="form-group">
+                    <label>                        Jam                    </label>
+                    <select id="bookingTime">
+                        <option value="09:00 - 11:30 WIB">                            Pagi: 09:00 - 11:30 WIB                        </option>
+                        <option value="12:00 - 14:30 WIB">                            Siang: 12:00 - 14:30 WIB                        </option>
+                        <option value="15:00 - 17:30 WIB">                            Sore: 15:00 - 17:30 WIB                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>                    Catatan untuk Teknisi                </label>
+                <textarea                    id="bookingNotes"                    placeholder="Contoh: Ada baret di knalpot, kondisi rantai kotor, dll."                ></textarea>
+            </div>
+
+            <button                class="btn-primary full-width"                onclick="createBooking()"            >                Konfirmasi & Kirim Booking            </button>
+        </div>
+    </section>
+
+    <!-- ============================= -->    <!-- BOOKING SUCCESS -->    <!-- ============================= -->
+    <div        id="bookingModal"        class="modal hidden"    >
+        <div class="modal-content">
+            <button                class="modal-close"                onclick="closeBookingModal()"            >                ×            </button>
+            <div class="success-icon">                ✓            </div>
+            <h2>                Booking Berhasil Terkirim!            </h2>
+            <p>                Permintaan booking Anda telah diterima.                Admin akan mengonfirmasi ketersediaan slot melalui WhatsApp.            </p>
+
+            <div class="booking-code-box">
+                <small>                    KODE BOOKING ANDA                </small>
+                <strong id="generatedCode">                    HG-2026-XXXXXX                </strong>
+                <p>                    Simpan kode ini untuk melacak status booking.                </p>
+            </div>
+
+            <div           
