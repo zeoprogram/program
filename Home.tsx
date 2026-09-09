@@ -1,1 +1,287 @@
+import { useMemo, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import {
+  ArrowRight,
+  Bike,
+  CalendarDays,
+  CarFront,
+  Check,
+  CheckCircle2,
+  Clock3,
+  Gauge,
+  Home as HomeIcon,
+  MapPin,
+  Menu,
+  Navigation,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Wrench,
+  X,
+} from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { apiGet, apiPost } from "@/lib/api";
+import type { Booking, BookingCreate, BookingMeta, BookingStatus, ServiceLocation } from "@/lib/types";
+
+const heroImage =
+  "https://images.unsplash.com/photo-1620584898989-d39f7f9ed1b7?crop=entropy&cs=srgb&fm=jpg&q=85";
+const facilityImage =
+  "https://images.unsplash.com/photo-1686023774083-bcf651147815?crop=entropy&cs=srgb&fm=jpg&q=85";
+
+const statusLabels: Record<BookingStatus, string> = {
+  pending: "Menunggu konfirmasi",
+  confirmed: "Terjadwal",
+  in_progress: "Sedang dikerjakan",
+  quality_check: "Quality check",
+  completed: "Selesai",
+  cancelled: "Dibatalkan",
+};
+
+const statusSteps: { key: BookingStatus; label: string }[] = [
+  { key: "pending", label: "Diterima" },
+  { key: "confirmed", label: "Terjadwal" },
+  { key: "in_progress", label: "Dikerjakan" },
+  { key: "quality_check", label: "QC Steril" },
+  { key: "completed", label: "Selesai" },
+];
+
+const services = [
+  { name: "Paint Correction 2-Step", short: "Paint correction", price: 450000, detail: "Pulihkan kilau dan reduksi baret halus." },
+  { name: "Engine Deep Degreaser", short: "Engine deep clean", price: 225000, detail: "Detail ruang mesin dengan prosedur aman." },
+  { name: "Ceramic Coating 9H+", short: "Ceramic coating", price: 650000, detail: "Proteksi premium dengan garansi kilau." },
+  { name: "Wet Gloss Finish", short: "Wet gloss finish", price: 175000, detail: "Finishing glossy untuk tampilan maksimal." },
+  { name: "Helmet Spa", short: "Helmet spa", price: 150000, detail: "Sanitasi menyeluruh untuk helm harian." },
+];
+
+const vehicleOptions = {
+  Motor: [
+    { label: "Bebek / Matic Kecil", price: 0, examples: "Beat, Vario 125, Scoopy, Mio" },
+    { label: "Matic Besar / Sport", price: 75000, examples: "NMAX, PCX, ADV, Aerox, R25" },
+    { label: "Big Bike / Moge", price: 150000, examples: "ZX-6R, Harley, T-Max, Ducati" },
+  ],
+  Mobil: [
+    { label: "City Car / Sedan", price: 250000, examples: "Brio, Yaris, Civic, Corolla" },
+    { label: "SUV / MPV", price: 350000, examples: "Fortuner, Pajero, Innova, CR-V" },
+    { label: "Premium / Large", price: 500000, examples: "Alphard, BMW, Mercedes, Range Rover" },
+  ],
+  Helm: [
+    { label: "Full Face", price: 0, examples: "Shoei, AGV, Arai, KYT" },
+    { label: "Half Face / Open Face", price: 0, examples: "Cargloss, HJC, Nolan" },
+  ],
+};
+
+type VehicleCategory = keyof typeof vehicleOptions;
+type BookingForm = BookingCreate;
+
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(value);
+
+const initialForm: BookingForm = {
+  customer_name: "",
+  whatsapp: "",
+  vehicle_category: "Motor",
+  vehicle_type: vehicleOptions.Motor[0].label,
+  vehicle_model: "",
+  plate_number: "",
+  service_location: "workshop",
+  services: [services[0].name],
+  preferred_date: "",
+  time_slot: "09:00 - 11:00",
+  address: "",
+  notes: "",
+  estimated_total: 450000,
+};
+
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return <p className="mb-3 font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-red-500">{children}</p>;
+}
+
+function StatusBadge({ status }: { status: BookingStatus }) {
+  const isComplete = status === "completed";
+  const isActive = status === "in_progress" || status === "quality_check";
+  return (
+    <Badge
+      data-testid={`booking-status-${status}`}
+      variant="outline"
+      className={isComplete ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400" : isActive ? "border-red-500/40 bg-red-500/10 text-red-400" : "border-zinc-700 bg-zinc-900 text-zinc-300"}
+    >
+      {statusLabels[status]}
+    </Badge>
+  );
+}
+
+export default function Home() {
+  const queryClient = useQueryClient();
+  const [category, setCategory] = useState<VehicleCategory>("Motor");
+  const [vehicleType, setVehicleType] = useState(vehicleOptions.Motor[0].label);
+  const [location, setLocation] = useState<ServiceLocation>("workshop");
+  const [selectedServices, setSelectedServices] = useState<string[]>([services[0].name]);
+  const [form, setForm] = useState<BookingForm>(initialForm);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [trackInput, setTrackInput] = useState("");
+  const [trackSubmitted, setTrackSubmitted] = useState(false);
+
+  const { data: meta } = useQuery({
+    queryKey: ["booking-meta"],
+    queryFn: () => apiGet<BookingMeta>("/bookings/meta"),
+    retry: false,
+  });
+  const tracking = useQuery({
+    queryKey: ["track-booking", trackInput],
+    queryFn: () => apiGet<Booking[]>(`/bookings/track?q=${encodeURIComponent(trackInput.trim())}`),
+    enabled: trackSubmitted && trackInput.trim().length > 1,
+    retry: false,
+  });
+
+  const vehiclePrice = vehicleOptions[category].find((option) => option.label === vehicleType)?.price ?? 0;
+  const serviceTotal = selectedServices.reduce((sum, selected) => sum + (services.find((service) => service.name === selected)?.price ?? 0), 0);
+  const locationPrice = location === "home_service" ? 75000 : 0;
+  const total = vehiclePrice + serviceTotal + locationPrice;
+
+  const createBooking = useMutation({
+    mutationFn: (payload: BookingCreate) => apiPost<Booking>("/bookings", payload),
+    onSuccess: (booking) => {
+      queryClient.invalidateQueries({ queryKey: ["bookings"] });
+      toast.success(`Booking ${booking.code} berhasil dibuat`, { description: "Admin akan menghubungi Anda melalui WhatsApp." });
+      setBookingOpen(false);
+      setTrackInput(booking.code);
+      setTrackSubmitted(true);
+      setForm(initialForm);
+    },
+    onError: () => toast.error("Booking belum tersimpan", { description: "Periksa kembali data Anda lalu coba lagi." }),
+  });
+
+  const openBooking = () => {
+    setForm((current) => ({ ...current, vehicle_category: category, vehicle_type: vehicleType, service_location: location, services: selectedServices, estimated_total: total }));
+    setBookingOpen(true);
+  };
+
+  const setCategoryAndType = (nextCategory: VehicleCategory) => {
+    setCategory(nextCategory);
+    setVehicleType(vehicleOptions[nextCategory][0].label);
+  };
+
+  const toggleService = (name: string) => {
+    setSelectedServices((current) => current.includes(name) ? current.filter((item) => item !== name) : [...current, name]);
+  };
+
+  const submitBooking = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    createBooking.mutate({ ...form, estimated_total: total });
+  };
+
+  const activeTracking = tracking.data?.[0];
+  const activeStep = activeTracking ? statusSteps.findIndex((step) => step.key === activeTracking.status) : -1;
+
+  return (
+    <main className="min-h-screen overflow-hidden bg-[#09090b] text-zinc-100 selection:bg-red-600 selection:text-white">
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-[#09090b]/80 backdrop-blur-xl">
+        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <a href="#home" className="flex items-center gap-3" data-testid="brand-home-link">
+            <span className="grid size-9 place-items-center rounded-lg bg-red-600 text-white shadow-[0_0_24px_rgba(220,38,38,0.3)]"><Wrench size={18} /></span>
+            <span><span className="block text-sm font-bold tracking-[0.16em] text-white">HARYADI</span><span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">Garage Detailing</span></span>
+          </a>
+          <nav className={`${mobileMenuOpen ? "absolute left-0 right-0 top-[72px] flex border-b border-white/10 bg-[#09090b] p-5" : "hidden"} flex-col gap-5 md:static md:flex md:flex-row md:items-center md:border-0 md:bg-transparent md:p-0`} data-testid="main-navigation">
+            <a className="text-sm text-zinc-400 transition-colors hover:text-white" href="#calculator" data-testid="nav-calculator-link">Kalkulator</a>
+            <a className="text-sm text-zinc-400 transition-colors hover:text-white" href="#services" data-testid="nav-services-link">Layanan</a>
+            <a className="text-sm text-zinc-400 transition-colors hover:text-white" href="#tracking" data-testid="nav-tracking-link">Lacak Booking</a>
+            <a className="text-sm text-zinc-400 transition-colors hover:text-white" href="/admin" data-testid="nav-admin-link">Admin Panel</a>
+          </nav>
+          <div className="flex items-center gap-2">
+            <Button onClick={openBooking} className="hidden bg-red-600 font-semibold text-white hover:bg-red-700 sm:inline-flex" data-testid="nav-booking-button">Booking Sekarang <ArrowRight /></Button>
+            <Button variant="ghost" size="icon" className="text-zinc-300 md:hidden" onClick={() => setMobileMenuOpen((open) => !open)} data-testid="mobile-menu-button">{mobileMenuOpen ? <X /> : <Menu />}</Button>
+          </div>
+        </div>
+      </header>
+
+      <section id="home" className="relative isolate border-b border-white/10 pt-[72px]">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_72%_35%,rgba(220,38,38,0.15),transparent_31%),linear-gradient(115deg,#09090b_20%,rgba(9,9,11,0.75)_55%,rgba(9,9,11,0.34))]" />
+        <div className="absolute right-[-10%] top-[12%] -z-10 h-96 w-96 rounded-full border border-red-500/10 bg-red-500/5 blur-3xl" />
+        <div className="mx-auto grid min-h-[640px] max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.03fr_0.97fr] lg:px-8 lg:py-24">
+          <div className="max-w-2xl">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-red-400" data-testid="hero-eyebrow"><span className="size-1.5 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444]" /> Workshop Detailing & Home Service</div>
+            <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.02] tracking-[-0.045em] text-white sm:text-5xl lg:text-7xl" data-testid="hero-headline">Kembalikan <span className="text-red-500">kilau</span> sempurna kendaraan Anda.</h1>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg" data-testid="hero-description">Detailing presisi untuk motor, mobil, dan helm. Pilih pengerjaan steril di workshop atau panggil tim kami langsung ke rumah.</p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button onClick={openBooking} className="h-12 bg-red-600 px-6 font-semibold text-white shadow-[0_12px_35px_rgba(220,38,38,0.25)] hover:bg-red-700 active:scale-[0.98]" data-testid="hero-booking-button">Booking Workshop / Home Service <ArrowRight /></Button>
+              <a href="#calculator" className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-zinc-700 px-6 text-sm font-semibold text-zinc-200 transition hover:border-zinc-500 hover:bg-white/5" data-testid="hero-calculator-link">Hitung harga instan <Gauge size={17} /></a>
+            </div>
+            <div className="mt-12 grid max-w-lg grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-6" data-testid="hero-stats">
+              <div className="pr-4"><p className="text-2xl font-bold text-white">1.250<span className="text-red-500">+</span></p><p className="mt-1 text-xs text-zinc-500">Unit dikerjakan</p></div>
+              <div className="px-4"><p className="text-2xl font-bold text-white">4.9<span className="text-red-500">/5</span></p><p className="mt-1 text-xs text-zinc-500">Rating kepuasan</p></div>
+              <div className="pl-4"><p className="text-2xl font-bold text-white">100<span className="text-red-500">%</span></p><p className="mt-1 text-xs text-zinc-500">Garansi kilau</p></div>
+            </div>
+          </div>
+          <div className="relative mx-auto w-full max-w-xl lg:ml-auto" data-testid="hero-image-card">
+            <div className="absolute -inset-3 rounded-2xl bg-red-600/10 blur-2xl" />
+            <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-zinc-900 shadow-2xl">
+              <img src={heroImage} alt="Detailing kendaraan di workshop" className="h-[430px] w-full object-cover opacity-80 grayscale-[0.15]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between p-6"><div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-red-400">Premium detailing</p><p className="mt-2 text-xl font-semibold text-white">Wet Gloss Finish</p></div><div className="grid size-12 place-items-center rounded-full border border-white/20 bg-black/50"><Sparkles className="text-red-400" size={20} /></div></div>
+              <div className="absolute left-5 top-5 rounded-lg border border-white/15 bg-black/45 px-3 py-2 backdrop-blur-md"><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-300">Bay 01 / Active</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="calculator" className="border-b border-white/10 bg-[#0d0d10] py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+            <div className="lg:sticky lg:top-28">
+              <SectionEyebrow>01 / Kalkulator harga instan</SectionEyebrow>
+              <h2 className="max-w-lg text-3xl font-bold tracking-tight text-white sm:text-4xl">Harga transparan, tanpa tebak-tebakan.</h2>
+              <p className="mt-5 max-w-md leading-relaxed text-zinc-400">Sesuaikan kendaraan, lokasi, dan treatment yang Anda butuhkan. Estimasi langsung tampil sebelum booking.</p>
+              <div className="mt-8 flex items-center gap-3 text-sm text-zinc-400"><ShieldCheck className="text-red-500" size={18} /> Estimasi dikonfirmasi admin dalam 15 menit</div>
+              <div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-950 p-5"><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">Workshop status</p><div className="mt-3 flex items-center gap-3"><span className="size-2 rounded-full bg-emerald-500 shadow-[0_0_12px_#22c55e]" /><span className="text-sm text-zinc-200">Menerima booking hari ini</span><span className="ml-auto text-xs text-zinc-500">08:30—18:00</span></div></div>
+            </div>
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-5 shadow-2xl sm:p-8" data-testid="price-calculator">
+              <div className="flex items-start justify-between gap-4 border-b border-zinc-800 pb-6"><div><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">Build your treatment</p><h3 className="mt-2 text-2xl font-semibold text-white">Pilih paket Anda</h3></div><span className="rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 font-mono text-xs text-red-400" data-testid="calculator-total-badge">{formatCurrency(total)}</span></div>
+              <div className="mt-7"><Label className="text-xs font-semibold uppercase tracking-wider text-zinc-400">1. Jenis kendaraan</Label><div className="mt-3 grid grid-cols-3 gap-2" data-testid="vehicle-category-tabs">{(Object.keys(vehicleOptions) as VehicleCategory[]).map((item) => <button key={item} type="button" onClick={() => setCategoryAndType(item)} className={`flex flex-col items-center gap-2 rounded-xl border p-4 text-sm transition active:scale-[0.98] ${category === item ? "border-red-500 bg-red-500/10 text-white" : "border-zinc-800 bg-zinc-900/60 text-zinc-500 hover:border-zinc-600 hover:text-zinc-300"}`} data-testid={`vehicle-category-${item.toLowerCase()}`}>{item === "Motor" ? <Bike size={20} /> : item === "Mobil" ? <CarFront size={20} /> : <ShieldCheck size={20} />}{item}</button>)}</div></div>
+              <div className="mt-7"><Label className="text-xs font-semibold uppercase tracking-wider text-zinc-400">2. Kategori kendaraan</Label><div className="mt-3 grid gap-2 sm:grid-cols-3" data-testid="vehicle-type-options">{vehicleOptions[category].map((option) => <button key={option.label} type="button" onClick={() => setVehicleType(option.label)} className={`rounded-xl border p-4 text-left transition active:scale-[0.98] ${vehicleType === option.label ? "border-red-500/70 bg-red-500/10" : "border-zinc-800 bg-zinc-900/60 hover:border-zinc-600"}`} data-testid={`vehicle-type-${option.label.toLowerCase().replaceAll(" / ", "-").replaceAll(" ", "-")}`}><div className="flex items-center justify-between gap-2"><span className="text-sm font-semibold text-white">{option.label}</span>{vehicleType === option.label && <Check size={15} className="text-red-500" />}</div><p className="mt-2 text-xs leading-relaxed text-zinc-500">{option.examples}</p></button>)}</div></div>
+              <div className="mt-7"><Label className="text-xs font-semibold uppercase tracking-wider text-zinc-400">3. Lokasi pengerjaan</Label><div className="mt-3 grid gap-2 sm:grid-cols-2">{([{ value: "workshop", title: "Workshop Garasi", description: "Datang ke Haryadi Garage", icon: Wrench, price: "Gratis transport" }, { value: "home_service", title: "Home Service", description: "Tim datang ke lokasi Anda", icon: HomeIcon, price: "+ Rp75.000 transport" }] as const).map((item) => <button key={item.value} type="button" onClick={() => setLocation(item.value)} className={`flex items-start gap-3 rounded-xl border p-4 text-left transition active:scale-[0.98] ${location === item.value ? "border-red-500/70 bg-red-500/10" : "border-zinc-800 bg-zinc-900/60 hover:border-zinc-600"}`} data-testid={`service-location-${item.value}`}><item.icon size={18} className={location === item.value ? "text-red-500" : "text-zinc-500"} /><span><span className="block text-sm font-semibold text-white">{item.title}</span><span className="mt-1 block text-xs text-zinc-500">{item.description}</span><span className="mt-2 block font-mono text-[10px] uppercase tracking-wider text-red-400">{item.price}</span></span></button>)}</div></div>
+              <div className="mt-7"><div className="flex items-center justify-between"><Label className="text-xs font-semibold uppercase tracking-wider text-zinc-400">4. Menu layanan</Label><span className="font-mono text-[10px] text-zinc-600">BISA PILIH LEBIH DARI SATU</span></div><div className="mt-3 grid gap-2">{services.map((service) => { const selected = selectedServices.includes(service.name); return <button key={service.name} type="button" onClick={() => toggleService(service.name)} className={`flex items-center gap-3 rounded-xl border p-4 text-left transition active:scale-[0.99] ${selected ? "border-red-500/60 bg-red-500/10" : "border-zinc-800 bg-zinc-900/40 hover:border-zinc-600"}`} data-testid={`service-option-${service.short.toLowerCase().replaceAll(" ", "-")}`}><span className={`grid size-5 shrink-0 place-items-center rounded border ${selected ? "border-red-500 bg-red-600 text-white" : "border-zinc-700 text-transparent"}`}><Check size={13} /></span><span className="min-w-0 flex-1"><span className="block text-sm font-semibold text-white">{service.name}</span><span className="mt-1 block text-xs text-zinc-500">{service.detail}</span></span><span className="font-mono text-xs text-zinc-300">+{formatCurrency(service.price)}</span></button>; })}</div></div>
+              <div className="mt-8 flex flex-col gap-4 border-t border-zinc-800 pt-6 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs uppercase tracking-wider text-zinc-500">Total estimasi</p><p className="mt-1 text-3xl font-bold text-white" data-testid="calculator-total">{formatCurrency(total)}</p><p className="mt-1 text-xs text-zinc-500">*Harga final dikonfirmasi setelah inspeksi kendaraan</p></div><Button onClick={openBooking} disabled={selectedServices.length === 0} className="h-11 bg-red-600 px-5 font-semibold text-white hover:bg-red-700 active:scale-[0.98]" data-testid="calculator-booking-button">Lanjut ke booking <ArrowRight /></Button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" className="border-b border-white/10 py-20 sm:py-28"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><SectionEyebrow>02 / Treatment menu</SectionEyebrow><h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Pengerjaan yang terasa bedanya.</h2></div><p className="max-w-sm text-sm leading-relaxed text-zinc-500">Proses terukur, produk pilihan, dan hasil yang siap dipamerkan.</p></div><div className="mt-10 grid gap-4 md:grid-cols-3">{services.slice(0, 3).map((service, index) => <article key={service.name} className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 p-6 transition duration-300 hover:-translate-y-1 hover:border-red-600/50 hover:shadow-[0_0_25px_rgba(220,38,38,0.12)]" data-testid={`service-card-${index + 1}`}><span className="font-mono text-xs text-red-500">0{index + 1}</span><div className="mt-12"><h3 className="text-xl font-semibold text-white">{service.name}</h3><p className="mt-3 text-sm leading-relaxed text-zinc-500">{service.detail}</p></div><div className="mt-8 flex items-center justify-between border-t border-zinc-800 pt-4"><span className="font-mono text-xs uppercase tracking-wider text-zinc-600">Mulai dari</span><span className="text-sm font-semibold text-zinc-200">{formatCurrency(service.price)}</span></div><div className="absolute right-6 top-6 size-14 rounded-full border border-red-500/10 bg-red-500/5 transition group-hover:scale-110" /></article>)}</div></div></section>
+
+      <section id="tracking" className="border-b border-white/10 bg-[#0d0d10] py-20 sm:py-28"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center"><div><SectionEyebrow>03 / Live status tracking</SectionEyebrow><h2 className="max-w-lg text-3xl font-bold tracking-tight text-white sm:text-4xl">Tahu posisi kendaraan Anda, setiap saat.</h2><p className="mt-5 max-w-md leading-relaxed text-zinc-400">Masukkan kode booking atau nomor WhatsApp yang digunakan saat mendaftar.</p><div className="mt-7 flex flex-col gap-2 sm:flex-row"><Input value={trackInput} onChange={(event) => setTrackInput(event.target.value)} placeholder="HG-2026-DEMO01" className="h-11 border-zinc-700 bg-zinc-950 text-white placeholder:text-zinc-600" data-testid="tracking-search-input" /><Button onClick={() => setTrackSubmitted(true)} disabled={trackInput.trim().length < 2} className="h-11 bg-red-600 text-white hover:bg-red-700 sm:px-5" data-testid="tracking-search-button"><Search size={17} /> Lacak status</Button></div>{tracking.isError && <p className="mt-3 text-xs text-red-400" data-testid="tracking-error">Data tracking belum bisa dimuat. Coba beberapa saat lagi.</p>}</div><div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6 sm:p-8" data-testid="tracking-result-card"><div className="flex items-start justify-between border-b border-zinc-800 pb-5"><div><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">Booking lookup</p><h3 className="mt-2 text-xl font-semibold text-white">{activeTracking ? activeTracking.code : "Belum ada booking dipilih"}</h3></div>{activeTracking && <StatusBadge status={activeTracking.status} />}</div>{activeTracking ? <><div className="grid gap-4 py-6 sm:grid-cols-3"><div><p className="text-xs text-zinc-600">Pelanggan</p><p className="mt-1 text-sm text-zinc-200">{activeTracking.customer_name}</p></div><div><p className="text-xs text-zinc-600">Kendaraan</p><p className="mt-1 text-sm text-zinc-200">{activeTracking.vehicle_model}</p></div><div><p className="text-xs text-zinc-600">Jadwal</p><p className="mt-1 text-sm text-zinc-200">{activeTracking.preferred_date} · {activeTracking.time_slot}</p></div></div><div className="relative grid grid-cols-5 gap-1 pt-4">{statusSteps.map((step, index) => <div key={step.key} className="relative text-center" data-testid={`tracking-step-${step.key}`}><div className={`relative z-10 mx-auto grid size-8 place-items-center rounded-full border ${index <= activeStep ? "border-red-500 bg-red-600 text-white" : "border-zinc-700 bg-zinc-900 text-zinc-600"}`}>{index <= activeStep ? <Check size={14} /> : <span className="text-xs">{index + 1}</span>}</div><p className={`mt-3 text-[10px] leading-tight sm:text-xs ${index <= activeStep ? "text-zinc-200" : "text-zinc-600"}`}>{step.label}</p>{index < statusSteps.length - 1 && <span className={`absolute left-[calc(50%+16px)] right-[calc(-50%+16px)] top-4 h-px ${index < activeStep ? "bg-red-600" : "bg-zinc-800"}`} />}</div>)}</div></> : <div className="grid min-h-48 place-items-center py-8 text-center"><div><div className="mx-auto grid size-12 place-items-center rounded-full border border-zinc-800 bg-zinc-900 text-zinc-600"><Navigation size={20} /></div><p className="mt-4 text-sm text-zinc-400">Masukkan kode untuk melihat progres pengerjaan</p><p className="mt-2 font-mono text-[10px] uppercase tracking-wider text-zinc-600">Contoh: HG-2026-DEMO01</p></div></div>}</div></div></div></section>
+
+      <section className="border-b border-white/10 py-20 sm:py-28"><div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8"><div className="relative min-h-[380px] overflow-hidden rounded-2xl border border-zinc-800"><img src={facilityImage} alt="Fasilitas workshop Haryadi Garage" className="absolute inset-0 h-full w-full object-cover opacity-70 grayscale" /><div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-[#09090b]/30 to-transparent" /><div className="absolute bottom-0 left-0 p-7"><SectionEyebrow>04 / Our garage</SectionEyebrow><h2 className="max-w-md text-3xl font-bold text-white">Bay pengerjaan steril, hasil yang bisa dipertanggungjawabkan.</h2></div></div><div className="flex flex-col justify-center"><SectionEyebrow>Pusat workshop & garasi resmi</SectionEyebrow><h2 className="text-3xl font-bold text-white sm:text-4xl">Datang, tunggu, pulang dengan kilau baru.</h2><div className="mt-8 space-y-5"><div className="flex gap-4"><MapPin className="mt-1 shrink-0 text-red-500" size={19} /><div><p className="text-sm font-semibold text-zinc-200">Alamat garasi</p><p className="mt-1 text-sm leading-relaxed text-zinc-500">Jl. Raya Otomotif No. 88, Sektor 7 Bintaro Jaya, Tangerang Selatan</p></div></div><div className="flex gap-4"><Clock3 className="mt-1 shrink-0 text-red-500" size={19} /><div><p className="text-sm font-semibold text-zinc-200">Jam operasional</p><p className="mt-1 text-sm leading-relaxed text-zinc-500">Senin—Minggu · 08:30—18:00 WIB<br />Home service · 09:00—16:30 WIB</p></div></div></div><a href="https://maps.google.com/?q=-6.2829,106.7153" target="_blank" rel="noreferrer" className="mt-8 inline-flex w-fit items-center gap-2 text-sm font-semibold text-red-400 transition hover:text-red-300" data-testid="directions-link">Petunjuk arah Google Maps <ArrowRight size={16} /></a></div></div></section>
+
+      <footer className="border-t border-white/10 bg-[#060607] py-10"><div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8"><div className="flex items-center gap-3"><span className="grid size-8 place-items-center rounded-lg bg-red-600 text-white"><Wrench size={15} /></span><div><p className="text-xs font-bold tracking-[0.16em] text-white">HARYADI GARAGE</p><p className="mt-1 text-xs text-zinc-600">Detailing with discipline.</p></div></div><div className="flex flex-wrap gap-5 text-xs text-zinc-500"><a href="#calculator" className="hover:text-white" data-testid="footer-calculator-link">Kalkulator</a><a href="#tracking" className="hover:text-white" data-testid="footer-tracking-link">Lacak Booking</a><a href="/admin" className="hover:text-white" data-testid="footer-admin-link">Admin Panel</a></div><p className="font-mono text-[10px] uppercase tracking-wider text-zinc-700">© 2026 Haryadi Garage</p></div></footer>
+
+      <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
+        <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto border-zinc-800 bg-[#121215] text-white" data-testid="booking-dialog">
+          <DialogHeader><DialogTitle className="text-2xl text-white">Lengkapi detail booking</DialogTitle><DialogDescription className="text-zinc-400">Estimasi saat ini {formatCurrency(total)} · {meta?.workshop_name ?? "Haryadi Garage"}</DialogDescription></DialogHeader>
+          <form onSubmit={submitBooking} className="space-y-6 pt-3" data-testid="booking-form">
+            <div className="grid gap-4 sm:grid-cols-2"><div><Label htmlFor="customer-name" className="text-xs text-zinc-400">Nama lengkap</Label><Input id="customer-name" required value={form.customer_name} onChange={(event) => setForm({ ...form, customer_name: event.target.value })} placeholder="Nama Anda" className="mt-2 border-zinc-700 bg-zinc-950 text-white" data-testid="booking-customer-name-input" /></div><div><Label htmlFor="customer-whatsapp" className="text-xs text-zinc-400">Nomor WhatsApp</Label><Input id="customer-whatsapp" required value={form.whatsapp} onChange={(event) => setForm({ ...form, whatsapp: event.target.value })} placeholder="08xxxxxxxxxx" className="mt-2 border-zinc-700 bg-zinc-950 text-white" data-testid="booking-whatsapp-input" /></div></div>
+            <div className="grid gap-4 sm:grid-cols-2"><div><Label htmlFor="vehicle-model" className="text-xs text-zinc-400">Model kendaraan</Label><Input id="vehicle-model" required value={form.vehicle_model} onChange={(event) => setForm({ ...form, vehicle_model: event.target.value })} placeholder="Contoh: Yamaha NMAX 2023" className="mt-2 border-zinc-700 bg-zinc-950 text-white" data-testid="booking-vehicle-model-input" /></div><div><Label htmlFor="plate-number" className="text-xs text-zinc-400">Nomor polisi</Label><Input id="plate-number" required value={form.plate_number} onChange={(event) => setForm({ ...form, plate_number: event.target.value })} placeholder="B 1234 XYZ" className="mt-2 border-zinc-700 bg-zinc-950 text-white" data-testid="booking-plate-input" /></div></div>
+            <div className="grid gap-4 sm:grid-cols-2"><div><Label htmlFor="booking-date" className="text-xs text-zinc-400">Tanggal pilihan</Label><Input id="booking-date" type="date" required value={form.preferred_date} onChange={(event) => setForm({ ...form, preferred_date: event.target.value })} className="mt-2 border-zinc-700 bg-zinc-950 text-white" data-testid="booking-date-input" /></div><div><Label htmlFor="booking-time" className="text-xs text-zinc-400">Slot waktu</Label><select id="booking-time" value={form.time_slot} onChange={(event) => setForm({ ...form, time_slot: event.target.value })} className="mt-2 h-9 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 text-sm text-white outline-none focus:border-red-500" data-testid="booking-time-select"><option>09:00 - 11:00</option><option>11:00 - 13:00</option><option>13:00 - 15:00</option><option>15:00 - 17:00</option></select></div></div>
+            {form.service_location === "home_service" && <div><Label htmlFor="booking-address" className="text-xs text-zinc-400">Alamat home service</Label><Input id="booking-address" required value={form.address ?? ""} onChange={(event) => setForm({ ...form, address: event.target.value })} placeholder="Alamat lengkap rumah / kantor" className="mt-2 border-zinc-700 bg-zinc-950 text-white" data-testid="booking-address-input" /></div>}
+            <div><Label htmlFor="booking-notes" className="text-xs text-zinc-400">Catatan tambahan <span className="text-zinc-600">(opsional)</span></Label><textarea id="booking-notes" value={form.notes ?? ""} onChange={(event) => setForm({ ...form, notes: event.target.value })} placeholder="Keluhan atau request khusus kendaraan" className="mt-2 min-h-20 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none placeholder:text-zinc-600 focus:border-red-500" data-testid="booking-notes-input" /></div>
+            <div className="flex items-center justify-between rounded-xl border border-red-500/20 bg-red-500/5 p-4"><div><p className="text-xs text-zinc-500">Estimasi total booking</p><p className="mt-1 text-xl font-bold text-white">{formatCurrency(total)}</p></div><span className="text-right text-xs text-zinc-500">{selectedServices.length} treatment<br />{location === "workshop" ? "Workshop Garasi" : "Home Service"}</span></div>
+            <DialogFooter><Button type="button" variant="outline" onClick={() => setBookingOpen(false)} className="border-zinc-700 text-zinc-300 hover:bg-zinc-800" data-testid="booking-cancel-button">Batal</Button><Button type="submit" disabled={createBooking.isPending} className="bg-red-600 text-white hover:bg-red-700" data-testid="booking-submit-button">{createBooking.isPending ? "Menyimpan..." : "Konfirmasi booking"} <ArrowRight /></Button></DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </main>
+  );
+}
