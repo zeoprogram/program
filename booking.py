@@ -1,22 +1,62 @@
-@router.get("/track", response_model=list[Booking])
-async def track_bookings(q: str = Query(min_length=2, max_length=100)):
-    ).sort("created_at", -1).to_list(20)
-    return [Booking(**document) for document in documents]
+from datetime import datetime, timezone
+from typing import Literal
+import uuid
+
+from pydantic import BaseModel, Field
 
 
-@router.get("/meta", response_model=MetaResponse)
-async def get_booking_meta():
-    return MetaResponse(today=today_iso("Asia/Jakarta"), workshop_name="Haryadi Garage")
+BookingStatus = Literal[
+    "pending",
+    "confirmed",
+    "in_progress",
+    "quality_check",
+    "completed",
+    "cancelled",
+]
+ServiceLocation = Literal["workshop", "home_service"]
 
 
-@router.get("/{booking_id}", response_model=Booking)
-async def get_booking(booking_id: str):
-    if result.matched_count == 0:
-        raise HTTPException(status_code=404, detail="Booking tidak ditemukan")
-    document = await db.bookings.find_one({"id": booking_id})
-    return Booking(**document)
-  
+class BookingCreate(BaseModel):
+    customer_name: str = Field(min_length=2, max_length=100)
+    whatsapp: str = Field(min_length=8, max_length=30)
+    vehicle_category: str = Field(min_length=2, max_length=30)
+    vehicle_type: str = Field(min_length=2, max_length=60)
+    vehicle_model: str = Field(min_length=2, max_length=80)
+    plate_number: str = Field(min_length=2, max_length=15)
+    service_location: ServiceLocation
+    services: list[str] = Field(min_length=1, max_length=8)
+    preferred_date: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    time_slot: str = Field(min_length=3, max_length=30)
+    address: str | None = Field(default=None, max_length=240)
+    notes: str | None = Field(default=None, max_length=500)
+    estimated_total: int = Field(ge=0)
 
-@router.get("/meta", response_model=MetaResponse)
-async def get_booking_meta():
-    return MetaResponse(today=today_iso("Asia/Jakarta"), workshop_name="Haryadi Garage")
+
+class Booking(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    code: str
+    customer_name: str
+    whatsapp: str
+    vehicle_category: str
+    vehicle_type: str
+    vehicle_model: str
+    plate_number: str
+    service_location: ServiceLocation
+    services: list[str]
+    preferred_date: str
+    time_slot: str
+    address: str | None = None
+    notes: str | None = None
+    estimated_total: int
+    status: BookingStatus = "pending"
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class BookingStatusUpdate(BaseModel):
+    status: BookingStatus
+
+
+class MetaResponse(BaseModel):
+    today: str
+    workshop_name: str
